@@ -2,7 +2,7 @@ import numpy as np
 import codecs
 
 def readData(filePath):
-    with codecs.open(filePath, 'r', encoding=('utf-8')) as file:
+    with open(filePath) as file:
         # Reads in data from a file.
         # Strips white space and newlines from the ends.
         # Splits by newlines.
