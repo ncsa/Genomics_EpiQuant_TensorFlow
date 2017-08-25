@@ -2,7 +2,8 @@ import numpy as np
 
 def readData(filePath):
     with open(filePath) as file:
-        content = file.read().rstrip()
+        content = file.read()
+        content = content.rstrip()
         stringRows = content.split("\n")
         output = None
         for i in range(len(stringRows)):
