@@ -9,4 +9,7 @@ def readData(filePath):
         # For each split, split by tabs.
         # Delete the first column.
         # Convert array to floating point.
-        return np.delete([x.split("\t") for x in file.read().strip().split("\n")], 0, 1).astype(np.float)
+        fullArray = np.asarray([x.split("\t") for x in file.read().strip().split("\n")])
+        nameArray = fullArray[:, 0]
+        dataArray = np.delete(fullArray, 0, 1).astype(np.float)
+        return nameArray, dataArray
