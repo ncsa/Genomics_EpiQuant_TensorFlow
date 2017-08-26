@@ -10,5 +10,5 @@ print("Phenotypes:", phenoData.shape, "\n\n", phenoNames, "\n\n", phenoData, "\n
 snpNames, snpData = dh.getData("./data/8.snps.txt")
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
-print(len(snpData[0]))
-layer = net.Layer()
+size = len(snpData[0])
+layer = net.Layer(size)
