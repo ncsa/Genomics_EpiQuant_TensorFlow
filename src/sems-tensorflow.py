@@ -11,4 +11,6 @@ snpNames, snpData = dh.getData("./data/8.snps.txt")
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
 size = len(snpData[0])
-layer = net.Layer(size)
+iLayer = net.InputLayer(size)
+
+iLayer.shape()
