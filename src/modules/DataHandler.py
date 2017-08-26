@@ -44,13 +44,17 @@ def calculateInteractions(inputArray):
     isString = isinstance(inputArray[0][0], str)
     outputArray = None
 
+    # Pre-allocate outputArray
     if isString:
         outputArray = np.empty([combinations, 1], dtype=object)
     else:
         outputArray = np.empty([combinations, len(inputArray[0])], dtype=object)
 
+    # Assign all single contributions
     for i in range(length):
         outputArray[i] = inputArray[i]
+
+    # Calculate pairwise interactions
     for i in range(length):
         for j in range(length - (i + 1)):
             if isString:
