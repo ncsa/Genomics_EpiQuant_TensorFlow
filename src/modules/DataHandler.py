@@ -58,6 +58,7 @@ def calculateInteractions(inputArray):
             else:
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
+    return outputArray
 
 def getData(filePath):
     """ Reads in data from a file and formats it into a name and data array.
