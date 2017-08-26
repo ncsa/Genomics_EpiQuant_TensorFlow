@@ -1,5 +1,6 @@
 import numpy as np
 import modules.DataHandler as dh
+import modules.Network as net
 
 print()
 phenoNames, phenoData = dh.getData("./data/8.pheno.2.txt")
