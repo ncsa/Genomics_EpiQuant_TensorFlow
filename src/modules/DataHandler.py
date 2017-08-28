@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import sys
 
 def generateNames(name1, name2, position, outputArray):
     """ Generates all possible name combinations.
@@ -57,6 +58,12 @@ def calculateInteractions(inputArray):
     # Calculate pairwise interactions
     for i in range(length):
         for j in range(length - (i + 1)):
+            
+            interval = (i * j) / combinations
+            print(interval * 100)
+            sys.stdout.flush()
+            print("\r")
+
             if isString:
                 generateNames(inputArray[i][0], inputArray[length - j - 1][0], iteration, outputArray)
             else:
@@ -84,7 +91,6 @@ def getData(filePath, getCombinations):
         nameArray = np.asarray([[x] for x in fullArray[:, 0]])
         # Convert data array to floating point.
         dataArray = np.delete(fullArray, 0, 1).astype(np.float)
-        print(getCombinations)
         if not getCombinations:
             return nameArray, dataArray
         else:
