@@ -22,8 +22,9 @@ layer.shape()
 
 sess = sh.startSession()
 
+pastLoss = 0
 while True:
-    loss = sess.run(
+    currentLoss = sess.run(
         layer.loss,
         feed_dict = {
             layer.x: [snpData[0]],
@@ -54,7 +55,9 @@ while True:
             layer.y: [phenoData[0]]
         }
     )
-    print("Current loss:", "{:10.2f}".format(loss))
-    if loss < 0.05:
+    print("Current loss:", "{:10.2f}".format(currentLoss))
+    print("Loss Difference:", "{:10.2f}".format(pastLoss-currentLoss))
+    if Math.abs(pastLoss - currentLoss) < 0.05:
         break
+    pastLoss = currentLoss
 print("Closing session...")
