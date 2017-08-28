@@ -27,7 +27,7 @@ class ConnectedLayer:
         
         self.l2 = tf.nn.l2_loss(self.w)
         self.squareDifference = tf.reduce_sum(tf.square(self.input - self.z))
-        self.loss = self.squareDifference + self.l2_loss
+        self.loss = self.squareDifference + self.l2
         self.trainStep = tf.train.AdamOptimizer().minimize(self.loss)
 
     def shape(self):
