@@ -30,6 +30,23 @@ while True:
             layer.y: [phenoData[0]]
         }
     )
+    print(
+        sess.run(
+            layer.w,
+            feed_dict = {
+                layer.x: [snpData[0]],
+                layer.y: [phenoData[0]]
+            }
+        ), 
+        "\n",
+        sess.run(
+            layer.b,
+            feed_dict = {
+                layer.x: [snpData[0]],
+                layer.y: [phenoData[0]]
+            }
+        )
+    )
     sess.run(
         layer.trainStep,
         feed_dict = {
