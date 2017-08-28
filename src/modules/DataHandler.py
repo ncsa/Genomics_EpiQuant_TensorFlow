@@ -63,7 +63,7 @@ def calculateInteractions(inputArray):
             else:
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
-        print(" [", (i + 1) / length, "]", "Calculated", end="\r")
+        print(" [", "%:.2f" % ((i + 1) / length * 100), "]", "Calculated", end="\r")
     print()
     return outputArray
 
