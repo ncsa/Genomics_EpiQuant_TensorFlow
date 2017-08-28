@@ -22,12 +22,22 @@ layer.shape()
 
 sess = sh.startSession()
 
-print(
-    sess.run(
-        layer.squareDifference,
+while True:
+    loss = sess.run(
+        layer.loss,
         feed_dict = {
             layer.x: [snpData[0]],
             layer.y: [phenoData[0]]
         }
     )
-)
+    sess.run(
+        layer.trainStep,
+        feed_dict = {
+            layer.x: [snpData[0]],
+            layer.y: [phenoData[0]]
+        }
+    )
+    print("Current loss:", "{:10.2f}".format(loss))
+    if loss < 0.05:
+        break
+print("Closing session...")
