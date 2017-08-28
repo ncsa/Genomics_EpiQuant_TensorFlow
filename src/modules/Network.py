@@ -6,11 +6,11 @@ class ConnectedLayer:
         self.inSize = inSize
         self.outSize = outSize
         self.w_0 = tf.get_variable(
-                                 'w_0', 
-                                 shape = [self.inSize, outSize], 
-                                 initializer = tf.contrib.layers.xavier_initializer()
-                                )
-        self.w = tf.clip_by_value(w_0, 0, float("inf"))
+                                   'w_0', 
+                                   shape = [self.inSize, outSize], 
+                                   initializer = tf.contrib.layers.xavier_initializer()
+                                  )
+        self.w = tf.clip_by_value(self.w_0, 0, float("inf"))
         self.b = tf.Variable(tf.zeros(self.outSize))
 
     def train(self):
