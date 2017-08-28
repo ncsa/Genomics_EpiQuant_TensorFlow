@@ -15,11 +15,18 @@ print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
 size = len(snpData)
 
-iLayer = net.InputLayer(size)
-cLayer = net.ConnectedLayer(size)
-cLayer.train()
-
-iLayer.shape()
-cLayer.shape()
+layer = net.ConnectedLayer(size)
+layer.train()
+layer.shape()
 
 sess = sh.startSession()
+
+print(
+    sess.run(
+        cLayer.squareDifference,
+        feed_dict = {
+            layer.y: phenoData[0],
+            layer.x: snpData[0]
+        }
+    )
+)
