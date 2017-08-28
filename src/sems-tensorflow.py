@@ -9,7 +9,7 @@ print("Phenotypes:", phenoData.shape, "\n\n", phenoNames, "\n\n", phenoData, "\n
 
 snpNames, snpData = dh.getData("./data/8.snps.txt", True)
 snpNames = np.transpose(snpNames)
-snpData = np.tranpose(snpData)
+snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
 size = len(snpData[0])
