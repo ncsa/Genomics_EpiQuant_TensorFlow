@@ -1,6 +1,5 @@
 import tensorflow as tf
 import numpy as np
-import Math
 import modules.DataHandler as dh
 import modules.Network as net
 import modules.SessionHandler as sh
@@ -41,7 +40,7 @@ while True:
     )
     print("Current loss:", "{:10.2f}".format(currentLoss))
     print("Loss Difference:", "{:10.2f}".format(pastLoss-currentLoss))
-    if Math.abs(pastLoss - currentLoss) < 0.05:
+    if abs(pastLoss - currentLoss) < 0.05:
         print(
             sess.run(
                 layer.w,
