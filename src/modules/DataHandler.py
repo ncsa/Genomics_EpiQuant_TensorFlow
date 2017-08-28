@@ -2,6 +2,9 @@ import numpy as np
 import math
 import sys
 
+def reshape(array):
+    return np.array(array, dtype=float).reshape(1, len(array))
+
 def generateNames(name1, name2, position, outputArray):
     """ Generates all possible name combinations.
 

@@ -26,8 +26,8 @@ print(
     sess.run(
         layer.squareDifference,
         feed_dict = {
-            layer.x: snpData[0],
-            layer.y: phenoData[0]
+            layer.x: [snpData[0]],
+            layer.y: [phenoData[0]]
         }
     )
 )

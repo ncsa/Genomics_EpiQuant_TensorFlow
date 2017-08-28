@@ -25,7 +25,6 @@ class ConnectedLayer:
     def shape(self):
         print("The shape of x is:", self.x.get_shape())
         print("The shape of y is:", self.y.get_shape())
-        print("The shape of z is:", self.x.get_shape())
         print("The shape of w is:", self.w.get_shape())
         print("The shape of b is:", self.b.get_shape())
         print()
