@@ -63,7 +63,7 @@ def calculateInteractions(inputArray):
             else:
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
-        print("[", i + 1, "/", length, "]", "Combinations Calculated", end="\r")
+        print(" [", i + 1, "/", length, "]", "Combinations Calculated", end="\r")
     print()
     return outputArray
 
