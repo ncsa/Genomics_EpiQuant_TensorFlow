@@ -41,22 +41,27 @@ while True:
     print("      Loss:", "{:10.2f}".format(currentLoss))
     print("Difference:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
     if abs(pastLoss - currentLoss) < 0.05:
-        print(
+        np.savetxt(
+            "w.out",
             sess.run(
                 layer.w,
                 feed_dict = {
                     layer.x: snpData,
                     layer.y: [phenoData[0]]
                 }
-            ), 
-            "\n",
+            ),
+            delimiter="\t"
+        )
+        np.savetxt(
+            "b.out",
             sess.run(
                 layer.b,
                 feed_dict = {
                     layer.x: snpData,
                     layer.y: [phenoData[0]]
                 }
-            )
+            ),
+            delimiter="\t"
         )
         break
     pastLoss = currentLoss
