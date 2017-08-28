@@ -64,17 +64,18 @@ def calculateInteractions(inputArray):
             iteration += 1
     return outputArray
 
-def getData(filePath):
+def getData(filePath, getCombinations):
     """ Reads in data from a file and formats it into a name and data array.
 
     Args:
         filePath: The path to the file to be read in.
+        getCombinations: Calculate epistatic interactions.
 
     Returns:
         nameArray: Contains the names of each data row.
         dataArray: Contains the data elements of each row.
     """
-    with open(filePath, getCombinations) as file:
+    with open(filePath) as file:
         # Reads in data from a file.
         # Strips white space and newlines from the ends.
         # Splits by newlines then tabs for each split.   
