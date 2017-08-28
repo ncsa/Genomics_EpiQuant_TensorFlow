@@ -13,7 +13,7 @@ print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 size = len(snpData[0])
 
 iLayer = net.InputLayer(size)
-cLayer = net.ConnectedLayer(size, iLayer.il)
+cLayer = net.ConnectedLayer(size)
 
 iLayer.shape()
 cLayer.shape()
