@@ -13,9 +13,10 @@ snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
-size = len(snpData)
+inSize = len(snpData[0])
+outSize = len(phenoData[0])
 
-layer = net.ConnectedLayer(size)
+layer = net.ConnectedLayer(inSize, outSize)
 layer.train()
 layer.shape()
 
@@ -23,7 +24,7 @@ sess = sh.startSession()
 
 print(
     sess.run(
-        cLayer.squareDifference,
+        layer.squareDifference,
         feed_dict = {
             layer.y: phenoData[0],
             layer.x: snpData[0]

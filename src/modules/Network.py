@@ -1,28 +1,20 @@
 import tensorflow as tf
 import numpy as np
 
-class InputLayer:
-    def __init__(self, size):
-        self.size = size
-        self.i = tf.placeholder(tf.float32, [None, self.size])
-
-    def shape(self):
-        print("\nThe shape of the input is:", self.i.get_shape())
-        print()
-
 class ConnectedLayer:  
-    def __init__(self, size):
-        self.size = size
+    def __init__(self, inSize, outSize):
+        self.inSize = inSize
+        self.outSize = outSize
         self.w = tf.get_variable(
                                  'w', 
-                                 shape = [self.size, 1], 
+                                 shape = [self.inSize, outSize], 
                                  initializer = tf.contrib.layers.xavier_initializer()
                                 )
-        self.b = tf.Variable(tf.zeros(self.size))
+        self.b = tf.Variable(tf.zeros(self.outSize))
 
     def train(self):
-        self.y = tf.placeholder(tf.float32, [None, self.size])
-        self.x = tf.placeholder(tf.float32, [None, self.size])
+        self.x = tf.placeholder(tf.float32, [None, self.inSize])
+        self.y = tf.placeholder(tf.float32, [None, self.outSize])
         self.z = tf.nn.relu(tf.matmul(self.x, self.w) + self.b)
         
         self.l2 = tf.nn.l2_loss(self.w)
