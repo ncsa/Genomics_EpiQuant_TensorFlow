@@ -39,7 +39,7 @@ while True:
         }
     )
     print("      Loss:", "{:10.2f}".format(currentLoss))
-    print("Difference:", "{:10.2f}".format(pastLoss-currentLoss))
+    print("Difference:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
     if abs(pastLoss - currentLoss) < 0.05:
         print(
             sess.run(
