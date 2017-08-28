@@ -57,7 +57,7 @@ def calculateInteractions(inputArray):
 
     # Calculate pairwise interactions
     for i in range(length):
-        print(i, "/", length, "\r")
+        print(i, "/", length, end="\r")
         for j in range(length - (i + 1)):
             if isString:
                 generateNames(inputArray[i][0], inputArray[length - j - 1][0], iteration, outputArray)
