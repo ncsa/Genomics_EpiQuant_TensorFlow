@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import Math
 import modules.DataHandler as dh
 import modules.Network as net
 import modules.SessionHandler as sh
@@ -31,23 +32,6 @@ while True:
             layer.y: [phenoData[0]]
         }
     )
-    # print(
-    #     sess.run(
-    #         layer.w,
-    #         feed_dict = {
-    #             layer.x: [snpData[0]],
-    #             layer.y: [phenoData[0]]
-    #         }
-    #     ), 
-    #     "\n",
-    #     sess.run(
-    #         layer.b,
-    #         feed_dict = {
-    #             layer.x: [snpData[0]],
-    #             layer.y: [phenoData[0]]
-    #         }
-    #     )
-    # )
     sess.run(
         layer.trainStep,
         feed_dict = {
@@ -58,6 +42,23 @@ while True:
     print("Current loss:", "{:10.2f}".format(currentLoss))
     print("Loss Difference:", "{:10.2f}".format(pastLoss-currentLoss))
     if Math.abs(pastLoss - currentLoss) < 0.05:
+        print(
+            sess.run(
+                layer.w,
+                feed_dict = {
+                    layer.x: [snpData[0]],
+                    layer.y: [phenoData[0]]
+                }
+            ), 
+            "\n",
+            sess.run(
+                layer.b,
+                feed_dict = {
+                    layer.x: [snpData[0]],
+                    layer.y: [phenoData[0]]
+                }
+            )
+        )
         break
     pastLoss = currentLoss
 print("Closing session...")
