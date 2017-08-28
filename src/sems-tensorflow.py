@@ -38,8 +38,8 @@ while True:
             layer.y: [phenoData[0]]
         }
     )
-    print("Current loss:", "{:10.2f}".format(currentLoss))
-    print("Loss Difference:", "{:10.2f}".format(pastLoss-currentLoss))
+    print("      Loss:", "{:10.2f}".format(currentLoss))
+    print("Difference:", "{:10.2f}".format(pastLoss-currentLoss))
     if abs(pastLoss - currentLoss) < 0.05:
         print(
             sess.run(
