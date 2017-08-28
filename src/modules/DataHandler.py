@@ -57,13 +57,14 @@ def calculateInteractions(inputArray):
 
     # Calculate pairwise interactions
     for i in range(length):
-        print(i, "/", length, end="\r")
         for j in range(length - (i + 1)):
             if isString:
                 generateNames(inputArray[i][0], inputArray[length - j - 1][0], iteration, outputArray)
             else:
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
+        print("[" + i + 1, "/", length + "]", "Combinations Calculated", end="\r")
+    print()
     return outputArray
 
 def getData(filePath, getCombinations):
