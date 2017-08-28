@@ -50,7 +50,8 @@ while True:
                     layer.y: [phenoData[0]]
                 }
             ),
-            delimiter="\t"
+            delimiter="\t",
+            fmt="%1.2e"
         )
         np.savetxt(
             "b.out",
@@ -61,7 +62,8 @@ while True:
                     layer.y: [phenoData[0]]
                 }
             ),
-            delimiter="\t"
+            delimiter="\t",
+            fmt="%1.2e"
         )
         break
     pastLoss = currentLoss
