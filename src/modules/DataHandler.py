@@ -85,7 +85,7 @@ def getData(filePath, getCombinations):
         # Convert data array to floating point.
         dataArray = np.delete(fullArray, 0, 1).astype(np.float)
         print(getCombinations)
-        if getCombinations == True:
+        if not getCombinations:
             return nameArray, dataArray
         else:
             return calculateInteractions(nameArray), calculateInteractions(dataArray)
