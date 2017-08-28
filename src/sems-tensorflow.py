@@ -12,7 +12,7 @@ snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
-size = len(snpData[0])
+size = len(snpData)
 
 iLayer = net.InputLayer(size)
 cLayer = net.ConnectedLayer(size)
