@@ -74,7 +74,7 @@ def getData(filePath):
         nameArray: Contains the names of each data row.
         dataArray: Contains the data elements of each row.
     """
-    with open(filePath) as file:
+    with open(filePath, getCombinations) as file:
         # Reads in data from a file.
         # Strips white space and newlines from the ends.
         # Splits by newlines then tabs for each split.   
@@ -83,4 +83,7 @@ def getData(filePath):
         nameArray = np.asarray([[x] for x in fullArray[:, 0]])
         # Convert data array to floating point.
         dataArray = np.delete(fullArray, 0, 1).astype(np.float)
-        return calculateInteractions(nameArray), calculateInteractions(dataArray)
+        if getCombinations:
+            return nameArray, dataArray
+        else:
+            return calculateInteractions(nameArray), calculateInteractions(dataArray)
