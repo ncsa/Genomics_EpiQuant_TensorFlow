@@ -4,7 +4,7 @@ import numpy as np
 class InputLayer:
     def __init__(self, size):
         self.size = size
-        self.il = tf.placeholder(tf.float32, [None, self.size])
+        self.i = tf.placeholder(tf.float32, [None, self.size])
 
     def shape(self):
         print("\n", "The shape of the input is:", self.i.get_shape(), end="")
