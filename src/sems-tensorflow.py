@@ -16,6 +16,7 @@ size = len(snpData)
 
 iLayer = net.InputLayer(size)
 cLayer = net.ConnectedLayer(size)
+cLayer.train()
 
 iLayer.shape()
 cLayer.shape()
