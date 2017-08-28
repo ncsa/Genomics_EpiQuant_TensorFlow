@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 import modules.DataHandler as dh
 import modules.Network as net
+import modules.SessionHandler as sh
 
 print()
 phenoNames, phenoData = dh.getData("./data/8.pheno.2.txt", False)
@@ -20,3 +21,5 @@ cLayer.train()
 
 iLayer.shape()
 cLayer.shape()
+
+sess = sh.startSession()

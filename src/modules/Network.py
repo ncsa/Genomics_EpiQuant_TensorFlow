@@ -7,7 +7,8 @@ class InputLayer:
         self.i = tf.placeholder(tf.float32, [None, self.size])
 
     def shape(self):
-        print("\n", "The shape of the input is:", self.i.get_shape(), end="")
+        print("\n", "The shape of the input is:", self.i.get_shape())
+        print()
 
 class ConnectedLayer:  
     def __init__(self, size):
@@ -34,3 +35,4 @@ class ConnectedLayer:
         print("The shape of w is:", self.w.get_shape())
         print("The shape of x is:", self.x.get_shape())
         print("The shape of b is:", self.b.get_shape())
+        print()
