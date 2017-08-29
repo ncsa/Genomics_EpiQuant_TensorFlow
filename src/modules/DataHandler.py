@@ -2,9 +2,6 @@ import numpy as np
 import math
 import sys
 
-def reshape(array):
-    return np.array(array, dtype=float).reshape(1, len(array))
-
 def generateNames(name1, name2, position, outputArray):
     """ Generates all possible name combinations.
 
@@ -67,7 +64,7 @@ def calculateInteractions(inputArray):
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
         print(" [", "{:6.2f}".format((i + 1) / length * 100) + "%", "]", "Calculated", end="\r")
-    print()
+    print("\n")
     return outputArray
 
 def getData(filePath, getCombinations):
