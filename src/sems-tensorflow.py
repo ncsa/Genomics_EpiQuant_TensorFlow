@@ -28,9 +28,9 @@ sess = sh.startSession()
 
 pastLoss = 0
 while True:
-    # Get the current loss of the graph.
-    currentLoss = sess.run(
-        layer.loss,
+    # Get the current loss and train the graph.
+    currentLoss, _ = sess.run(
+        [layer.loss, layer.trainStep],
         feed_dict = {
             layer.x: snpData,
             layer.y: [phenoData[0]]
@@ -72,15 +72,6 @@ while True:
         )
         break
     pastLoss = currentLoss
-
-    # Train the model.
-    sess.run(
-        layer.trainStep,
-        feed_dict = {
-            layer.x: snpData,
-            layer.y: [phenoData[0]]
-        }
-    )
 
 print("Closing session...\n")
 sess.close()
