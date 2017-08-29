@@ -37,6 +37,8 @@ while True:
         }
     )
 
+    sh.printTensors(sess, 0)
+
     print()
     print("  Loss:", "{:10.2f}".format(currentLoss))
     print(" Delta:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
