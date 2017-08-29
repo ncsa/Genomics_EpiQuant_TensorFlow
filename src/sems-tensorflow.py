@@ -38,6 +38,7 @@ while True:
             layer.y: [phenoData[0]]
         }
     )
+    print()
     print("  Loss:", "{:10.2f}".format(currentLoss))
     print(" Delta:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
     print(" Alpha:", "{:10.2f}".format(currentLoss * 0.001))
@@ -68,5 +69,5 @@ while True:
         )
         break
     pastLoss = currentLoss
-print("Closing session...")
+print("Closing session...\n")
 sess.close()
