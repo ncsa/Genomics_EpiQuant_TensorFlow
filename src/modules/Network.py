@@ -19,7 +19,7 @@ class ConnectedLayer:
                                    shape = [self.inSize, outSize], 
                                    initializer = tf.contrib.layers.xavier_initializer()
                                   )
-        self.w = tf.clip_by_value(self.w_0, 0, float("inf"))
+        self.w = tf.clip_by_value(tf.abs(self.w_0), 0, float("inf"))
         self.b = tf.Variable(tf.zeros(self.outSize))
 
         self.x = tf.placeholder(tf.float32, [None, self.inSize])
