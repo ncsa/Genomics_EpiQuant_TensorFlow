@@ -42,10 +42,10 @@ while True:
     print()
     print("  Loss:", "{:10.2f}".format(currentLoss))
     print(" Delta:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
-    print(" Alpha:", "{:10.2f}".format(currentLoss * 0.05))
+    print(" Alpha:", "{:10.2f}".format(0.05))
 
     # Save the weight and bias tensors when the model converges.
-    if abs(pastLoss - currentLoss) < (currentLoss * 0.05):
+    if abs(pastLoss - currentLoss) < (0.05):
         np.savetxt(
             "w.out",
             sess.run(
