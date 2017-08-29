@@ -38,9 +38,10 @@ while True:
             layer.y: [phenoData[0]]
         }
     )
-    print("      Loss:", "{:10.2f}".format(currentLoss))
-    print("Difference:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
-    if abs(pastLoss - currentLoss) < 0.05:
+    print("  Loss:", "{:10.2f}".format(currentLoss))
+    print(" Delta:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
+    print(" Alpha:", "{:10.2f}".format(currentLoss * 0.001))
+    if abs(pastLoss - currentLoss) < (currentLoss * 0.001):
         np.savetxt(
             "w.out",
             sess.run(
@@ -68,3 +69,4 @@ while True:
         break
     pastLoss = currentLoss
 print("Closing session...")
+sess.close()
