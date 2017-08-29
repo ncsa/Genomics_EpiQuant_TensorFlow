@@ -33,9 +33,9 @@ class ConnectedLayer:
             None
         """
         self.l2 = tf.nn.l2_loss(self.w)
-        self.mse = tf.sqrt(tf.reduce_sum(tf.pow(self.y - self.z, 2)) / self.outSize)
+        self.mse = tf.reduce_sum(tf.pow(self.y - self.z, 2)) / self.outSize
         self.loss = self.mse + self.l2
-        self.trainStep = tf.train.AdamOptimizer().minimize(self.loss)
+        self.trainStep = tf.train.GradientDescentOptimizer().minimize(self.loss)
 
     def shape(self):
         """ Prints the graph's tensor dimensions. """
