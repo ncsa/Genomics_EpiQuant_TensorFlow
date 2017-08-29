@@ -16,11 +16,11 @@ class ConnectedLayer:
     def train(self):
         self.x = tf.placeholder(tf.float32, [None, self.inSize])
         self.y = tf.placeholder(tf.float32, [None, self.outSize])
-        self.z = tf.nn.relu(tf.matmul(self.x, self.w) + self.b)
+        self.z = tf.matmul(self.x, self.w) + self.b
         
         self.l2 = tf.nn.l2_loss(self.w)
-        self.squareDifference = tf.reduce_sum(tf.square(self.y - self.z))
-        self.loss = self.squareDifference + self.l2
+        self.mse = tf.reduce_sum(tf.pow(self.y - self.z, 2)) / (2 * self.outSize)
+        self.loss = self.mse + self.l2
         self.trainStep = tf.train.AdamOptimizer().minimize(self.loss)
 
     def shape(self):
