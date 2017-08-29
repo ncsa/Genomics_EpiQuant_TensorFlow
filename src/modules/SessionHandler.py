@@ -12,16 +12,7 @@ def printTensors(sess, layer, snpData, phenoData, i):
     """ Prints intermediate tensors. """
     print(
         sess.run(
-            layer.w,
-            feed_dict = {
-                layer.x: snpData,
-                layer.y: [phenoData[i]]
-            }
-        )
-    )
-    print(
-        sess.run(
-            layer.b,
+            [layer.w, layer.b],
             feed_dict = {
                 layer.x: snpData,
                 layer.y: [phenoData[i]]
