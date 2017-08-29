@@ -19,7 +19,7 @@ class ConnectedLayer:
         self.z = tf.matmul(self.x, self.w) + self.b
         
         self.l2 = tf.nn.l2_loss(self.w)
-        self.mse = tf.reduce_sum(tf.pow(self.y - self.z, 2)) / (2 * self.outSize)
+        self.mse = tf.reduce_sum(tf.pow(self.y - self.z, 2)) / self.outSize
         self.loss = self.mse + self.l2
         self.trainStep = tf.train.AdamOptimizer().minimize(self.loss)
 
