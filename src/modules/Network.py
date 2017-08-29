@@ -14,12 +14,8 @@ class ConnectedLayer:
         """
         self.inSize = inSize
         self.outSize = outSize
-        self.w_0 = tf.get_variable(
-                                   'w_0', 
-                                   shape = [self.inSize, outSize], 
-                                   initializer = tf.contrib.layers.xavier_initializer()
-                                  )
-        self.w = tf.clip_by_value(tf.abs(self.w_0), 0, float("inf"))
+        self.w_0 = tf.Variable(tf.ones([self.inSize, self.outSize]))
+        self.w = tf.clip_by_value(self.w_0, 0, float("inf"))
         self.b = tf.Variable(tf.zeros(self.outSize))
 
         self.x = tf.placeholder(tf.float32, [None, self.inSize])
