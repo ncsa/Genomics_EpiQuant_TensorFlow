@@ -37,7 +37,7 @@ while True:
         }
     )
 
-    sh.printTensors(sess, 0)
+    sh.printTensors(sess, layer, 0)
 
     print()
     print("  Loss:", "{:10.2f}".format(currentLoss))
