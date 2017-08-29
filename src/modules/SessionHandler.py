@@ -8,7 +8,7 @@ def startSession():
     tf.global_variables_initializer().run()
     return sess
 
-def printTensors(sess, layer, i):
+def printTensors(sess, layer, snpData, phenoData, i):
     """ Prints intermediate tensors. """
     print(
         sess.run(
