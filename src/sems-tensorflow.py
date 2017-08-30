@@ -31,6 +31,7 @@ sess = sh.startSession()
 
 alpha = 0.05
 pastLoss = 0
+step = 1
 while True:
     # Get the current loss and train the graph.
     currentLoss, _ = sess.run(
@@ -43,7 +44,7 @@ while True:
 
     # sh.printTensors(sess, layer, snpData, phenoData, 0)
 
-    sh.logTraining(pastLoss, currentLoss, alpha, appTime)
+    sh.logTraining(pastLoss, currentLoss, alpha, step, appTime)
 
     # Save the weight and bias tensors when the model converges.
     if abs(pastLoss - currentLoss) < (alpha):
