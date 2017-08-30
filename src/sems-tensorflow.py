@@ -3,6 +3,9 @@ import numpy as np
 import modules.DataHandler as dh
 import modules.Network as net
 import modules.SessionHandler as sh
+import modules.Timer as timer
+
+appTime = timer.Timer()
 
 # Gets the phenotype names and the regression y values.
 print()
@@ -40,7 +43,7 @@ while True:
 
     # sh.printTensors(sess, layer, snpData, phenoData, 0)
 
-    sh.logTraining(pastLoss, currentLoss, alpha)
+    sh.logTraining(pastLoss, currentLoss, alpha, appTime)
 
     # Save the weight and bias tensors when the model converges.
     if abs(pastLoss - currentLoss) < (alpha):
@@ -71,5 +74,5 @@ while True:
         break
     pastLoss = currentLoss
 
-print("Closing session...\n")
+print(appTime.getTime(), "Closing session...\n")
 sess.close()

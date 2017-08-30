@@ -13,8 +13,9 @@ def progress(i, length, message):
     if i + 1 == length:
         print("\n")
 
-def logTraining(pastLoss, currentLoss, alpha):
+def logTraining(pastLoss, currentLoss, alpha, appTime):
     print(
+        appTime.getTime(),
         "   Loss:", "{:.2E}".format(currentLoss),
         "   Delta:", "{:.2E}".format(abs(pastLoss-currentLoss)),
         "   Alpha:", "{:.2E}".format(alpha),
