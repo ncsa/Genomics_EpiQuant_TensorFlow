@@ -26,6 +26,7 @@ layer.shape()
 # Start TensorFlow session.
 sess = sh.startSession()
 
+alpha = 0.05
 pastLoss = 0
 while True:
     # Get the current loss and train the graph.
@@ -39,10 +40,10 @@ while True:
 
     # sh.printTensors(sess, layer, snpData, phenoData, 0)
 
-    sh.logTraining(pastLoss, currentLoss)
+    sh.logTraining(pastLoss, currentLoss, alpha)
 
     # Save the weight and bias tensors when the model converges.
-    if abs(pastLoss - currentLoss) < (0.05):
+    if abs(pastLoss - currentLoss) < (alpha):
         np.savetxt(
             "w.out",
             sess.run(
