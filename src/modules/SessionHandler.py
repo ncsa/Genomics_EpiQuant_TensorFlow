@@ -8,6 +8,11 @@ def startSession():
     tf.global_variables_initializer().run()
     return sess
 
+def progress(i, length, message):
+    print(" [", "{:6.2f}".format((i + 1) / length * 100) + "%", "]", message, end="\r")
+    if i + 1 == length:
+        print("\n")
+
 def printTensors(sess, layer, snpData, phenoData, i):
     """ Prints intermediate tensors. """
     print(

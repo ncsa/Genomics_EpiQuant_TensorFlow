@@ -1,6 +1,7 @@
 import numpy as np
 import math
 import sys
+import SessionHandler as sh
 
 def generateNames(name1, name2, position, outputArray):
     """ Generates all possible name combinations.
@@ -63,8 +64,8 @@ def calculateInteractions(inputArray):
             else:
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
-        print(" [", "{:6.2f}".format((i + 1) / length * 100) + "%", "]", "Calculated", end="\r")
-    print("\n")
+        sh.progress(i, length, "Calculated")
+
     return outputArray
 
 def getData(filePath, getCombinations):
