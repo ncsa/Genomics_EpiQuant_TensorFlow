@@ -24,12 +24,12 @@ def logTraining(pastLoss, currentLoss, alpha, step, appTime):
 
 def printTensors(sess, layer, snpData, phenoData, i):
     """ Prints intermediate tensors. """
-    print(
-        sess.run(
-            [layer.w, layer.b],
-            feed_dict = {
-                layer.x: snpData,
-                layer.y: [phenoData[i]]
-            }
-        )
+    w, b = sess.run(
+        [layer.w, layer.b],
+        feed_dict = {
+            layer.x: snpData,
+            layer.y: [phenoData[i]]
+        }
     )
+    print(w)
+    print(b)
