@@ -16,9 +16,9 @@ def progress(i, length, message):
 def logTraining(pastLoss, currentLoss, alpha):
     print(
         "\n",
-        "Loss:", "{:.2E}".format(currentLoss),
-        "Delta:", "{:.2E}".format(abs(pastLoss-currentLoss)),
-        "Alpha:", "{:.2E}".format(alpha),
+        "   Loss:", "{:.2E}".format(currentLoss),
+        "   Delta:", "{:.2E}".format(abs(pastLoss-currentLoss)),
+        "   Alpha:", "{:.2E}".format(alpha),
         end="\r"
     )
 
