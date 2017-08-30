@@ -18,8 +18,7 @@ def logTraining(pastLoss, currentLoss, alpha, appTime):
         appTime.getTime(),
         "   Loss:", "{:.2E}".format(currentLoss),
         "   Delta:", "{:.2E}".format(abs(pastLoss-currentLoss)),
-        "   Alpha:", "{:.2E}".format(alpha),
-        end="\r"
+        "   Alpha:", "{:.2E}".format(alpha)
     )
 
 def printTensors(sess, layer, snpData, phenoData, i):
