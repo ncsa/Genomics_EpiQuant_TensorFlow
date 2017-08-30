@@ -13,6 +13,15 @@ def progress(i, length, message):
     if i + 1 == length:
         print("\n")
 
+def logTraining(pastLoss, currentLoss):
+    print(
+        "\n",
+        "Loss:", "{:.2E}".format(currentLoss),
+        "Delta:", "{:.2E}".format(abs(pastLoss-currentLoss)),
+        "Alpha:", "{:.2E}".format(0.05),
+        end="\r"
+    )
+
 def printTensors(sess, layer, snpData, phenoData, i):
     """ Prints intermediate tensors. """
     print(

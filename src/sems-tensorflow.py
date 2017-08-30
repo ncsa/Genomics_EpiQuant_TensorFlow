@@ -39,10 +39,7 @@ while True:
 
     # sh.printTensors(sess, layer, snpData, phenoData, 0)
 
-    print()
-    print("  Loss:", "{:10.2f}".format(currentLoss))
-    print(" Delta:", "{:10.2f}".format(abs(pastLoss-currentLoss)))
-    print(" Alpha:", "{:10.2f}".format(0.05))
+    sh.logTraining(pastLoss, currentLoss)
 
     # Save the weight and bias tensors when the model converges.
     if abs(pastLoss - currentLoss) < (0.05):
