@@ -11,5 +11,5 @@ class Timer:
         end = time.time()
         m, s = divmod(end - self.start, 60)
         h, m = divmod(m, 60)
-        time_str = "%04d:%02d:%02d" % (h, m, s)
+        time_str = "%03d:%02d:%02d" % (h, m, s)
         return time_str
