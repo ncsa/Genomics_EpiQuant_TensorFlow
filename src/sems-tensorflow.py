@@ -74,6 +74,7 @@ while True:
         )
         break
     pastLoss = currentLoss
+    step += 1
 
 print(appTime.getTime(), "Closing session...\n")
 sess.close()
