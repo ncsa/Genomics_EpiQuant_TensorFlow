@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import sys
-import SessionHandler as sh
+import modules.SessionHandler as sh
 
 def generateNames(name1, name2, position, outputArray):
     """ Generates all possible name combinations.
