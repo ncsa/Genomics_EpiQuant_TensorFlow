@@ -1,7 +1,10 @@
 import tensorflow as tf
+import os
 
 def startSession():
     """ Starts an interactive session to run the tensorflow graph. """
+    os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   # see issue #152
+    os.environ["CUDA_VISIBLE_DEVICES"]="0"
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     sess = tf.InteractiveSession(config = config)
