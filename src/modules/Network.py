@@ -24,8 +24,9 @@ class ConnectedLayer:
         self.z = tf.matmul(self.x, self.w) + self.b
 
     def train(self):
-        """ Performs l2 regularization, calculates mean squared error, and minimizes loss using
-            an Adam Optimizer.
+        """ Performs l2 regularization, calculates root mean squared error, and minimizes loss
+        using an Adam Optimizer.
+        
         Args:
             None
 
@@ -33,8 +34,8 @@ class ConnectedLayer:
             None
         """
         self.l2 = tf.nn.l2_loss(self.w)
-        self.mse = tf.reduce_sum(tf.pow(self.y - self.z, 2)) / self.outSize
-        self.loss = self.mse + self.l2
+        self.rmse = tf.sqrt(tf.reduce_sum(tf.pow(self.y - self.z, 2)) / self.outSize)
+        self.loss = self.rmse + self.l2
         self.trainStep = tf.train.GradientDescentOptimizer(0.01).minimize(self.loss)
 
     def shape(self):
