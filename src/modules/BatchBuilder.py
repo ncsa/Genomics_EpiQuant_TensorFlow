@@ -11,10 +11,7 @@ def makeBatches(inputArray, batches):
     Returns:
         outputArray: A numpy array containing the data split into batches.
     """
-    print(inputArray)
     length = len(inputArray)
-    print("Length:", length)
-    print("Batches:", batches)
 
     outputArray = np.asarray(np.array_split(inputArray, batches))
     for i in range(len(outputArray)):

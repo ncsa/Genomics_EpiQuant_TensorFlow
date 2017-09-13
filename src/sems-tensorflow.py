@@ -35,8 +35,6 @@ layer = net.ConnectedLayer(inSize, outSize)
 layer.train()
 layer.shape()
 
-sys.exit()
-
 # Start TensorFlow session.
 sess = sh.startSession()
 
