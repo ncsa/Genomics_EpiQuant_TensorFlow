@@ -22,12 +22,13 @@ snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
+# Get input and output size for tensors.
+inSize = len(snpData[0])
+outSize = len(phenoData[0])
+
 # Make Batches out of snpData and unallocate snpData
 snpDataBatches = bb.makeBatches(snpData, batches)
 snpData = None
-
-inSize = len(snpData[0])
-outSize = len(phenoData[0])
 
 # Initialize graph structure.
 layer = net.ConnectedLayer(inSize, outSize)
