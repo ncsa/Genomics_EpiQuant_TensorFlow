@@ -9,7 +9,7 @@ import modules.BatchBuilder as bb
 import sys
 
 appTime = timer.Timer()
-batchSize = 10
+batchSize = 100
 
 # Gets the phenotype names and the regression y values.
 print()
