@@ -46,6 +46,8 @@ def calculateInteractions(inputArray):
     isString = isinstance(inputArray[0][0], str)
     outputArray = None
 
+    print(inputArray)
+
     # Pre-allocate outputArray
     if isString:
         outputArray = np.empty([combinations, 1], dtype=object)
