@@ -46,8 +46,8 @@ step = 1
 while True:
     # Train for an epoch
     for i in range(len(snpDataBatches)):
-        _, _ = sess.run(
-            [layer.loss, layer.trainStep],
+        _ = sess.run(
+            [layer.trainStep],
             feed_dict = {
                 layer.x: snpDataBatches[i],
                 layer.y: [phenoData[0]]
@@ -55,8 +55,8 @@ while True:
         )
 
     # Get the current loss and train the graph.
-    currentLoss, _ = sess.run(
-        [layer.loss, layer.trainStep],
+    currentLoss = sess.run(
+        [layer.loss],
         feed_dict = {
             layer.x: snpDataBatches[0],
             layer.y: [phenoData[0]]
