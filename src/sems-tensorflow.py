@@ -20,8 +20,6 @@ snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
-sys.exit()
-
 inSize = len(snpData[0])
 outSize = len(phenoData[0])
 
@@ -29,6 +27,8 @@ outSize = len(phenoData[0])
 layer = net.ConnectedLayer(inSize, outSize)
 layer.train()
 layer.shape()
+
+sys.exit()
 
 # Start TensorFlow session.
 sess = sh.startSession()
