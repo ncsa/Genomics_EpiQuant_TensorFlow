@@ -22,7 +22,7 @@ snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
-bb.makeBatches(snpData, batchSize)
+bb.makeBatches(snpData, batch)
 
 inSize = len(snpData[0])
 outSize = len(phenoData[0])
