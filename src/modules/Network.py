@@ -14,12 +14,11 @@ class ConnectedLayer:
         """
         self.inSize = inSize
         self.outSize = outSize
-        # self.w_0 = tf.Variable(tf.ones([self.inSize, self.outSize]))
-        self.w_0 = tf.Variable(tf.ones([self.inSize, None]))
+        self.w_0 = tf.Variable(tf.ones([self.inSize, self.outSize]))
         self.w = tf.clip_by_value(self.w_0, 0, float("inf"))
         self.b = tf.Variable(tf.zeros(self.outSize))
 
-        self.x = tf.placeholder(tf.float32, [None, self.inSize])
+        self.x = tf.placeholder(tf.float32, [None, None])
         self.y = tf.placeholder(tf.float32, [None, self.outSize])
         
         self.z = tf.matmul(self.x, self.w) + self.b
