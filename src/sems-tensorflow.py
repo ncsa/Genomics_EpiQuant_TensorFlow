@@ -4,10 +4,12 @@ import modules.DataHandler as dh
 import modules.Network as net
 import modules.SessionHandler as sh
 import modules.Timer as timer
+import modules.BatchBuilder as bb
 
 import sys
 
 appTime = timer.Timer()
+batchSize = 10
 
 # Gets the phenotype names and the regression y values.
 print()
@@ -19,6 +21,8 @@ snpNames, snpData = dh.getData("./data/8.snps.txt", True)
 snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
+
+bb.makeBatches(snpData, batchSize)
 
 inSize = len(snpData[0])
 outSize = len(phenoData[0])
