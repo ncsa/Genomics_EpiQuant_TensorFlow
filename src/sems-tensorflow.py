@@ -63,8 +63,6 @@ while True:
 
     # sh.printTensors(sess, layer, snpData, phenoData, 0)
 
-    print(currentLoss)
-
     sh.logTraining(pastLoss, currentLoss, alpha, step, appTime)
 
     # Save the weight and bias tensors when the model converges.
