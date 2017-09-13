@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import sys
-import modules.SessionHandler as sh
+import modules.Progress as prog
 
 def generateNames(name1, name2, position, outputArray):
     """ Generates all possible name combinations.
@@ -64,7 +64,7 @@ def calculateInteractions(inputArray):
             else:
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
-        sh.progress(i, length, "Calculated")
+        prog.progress(i, length, "Calculated")
 
     return outputArray
 

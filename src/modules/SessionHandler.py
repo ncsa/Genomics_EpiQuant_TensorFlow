@@ -12,11 +12,6 @@ def startSession():
     sess.run(tf.initialize_all_variables())
     return sess
 
-def progress(i, length, message):
-    print(" [", "{:6.2f}".format((i + 1) / length * 100) + "%", "]", message, end="\r")
-    if i + 1 == length:
-        print("\n")
-
 def logTraining(pastLoss, currentLoss, alpha, step, appTime):
     print(
         "[", appTime.getTime(), "]",
