@@ -9,7 +9,7 @@ import modules.BatchBuilder as bb
 import sys
 
 appTime = timer.Timer()
-batches = 50
+batches = 25
 
 # Gets the phenotype names and the regression y values.
 print()
@@ -22,7 +22,9 @@ snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
-bb.makeBatches(snpData, batches)
+# Make Batches out of snpData and unallocate snpData
+snpDataBatches = bb.makeBatches(snpData, batches)
+snpData = None
 
 inSize = len(snpData[0])
 outSize = len(phenoData[0])
@@ -41,11 +43,21 @@ alpha = 0.05
 pastLoss = 0
 step = 1
 while True:
+    # Train for an epoch
+    for i in range(len(snpDataBatches)):
+        _, _ = sess.run(
+            [layer.loss, layer.trainStep],
+            feed_dict = {
+                layer.x: snpDataBatches[i],
+                layer.y: [phenoData[0]]
+            }
+        )
+
     # Get the current loss and train the graph.
     currentLoss, _ = sess.run(
         [layer.loss, layer.trainStep],
         feed_dict = {
-            layer.x: snpData,
+            layer.x: snpDataBatches[0],
             layer.y: [phenoData[0]]
         }
     )
@@ -61,7 +73,7 @@ while True:
             sess.run(
                 layer.w,
                 feed_dict = {
-                    layer.x: snpData,
+                    layer.x: snpDataBatches[0],
                     layer.y: [phenoData[0]]
                 }
             ),
@@ -73,7 +85,7 @@ while True:
             sess.run(
                 layer.b,
                 feed_dict = {
-                    layer.x: snpData,
+                    layer.x: snpDataBatches[0],
                     layer.y: [phenoData[0]]
                 }
             ),
