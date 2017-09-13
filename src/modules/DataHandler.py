@@ -47,6 +47,7 @@ def calculateInteractions(inputArray):
     outputArray = None
 
     print(inputArray)
+    print(inputArray.shape)
 
     # Pre-allocate outputArray
     if isString:
