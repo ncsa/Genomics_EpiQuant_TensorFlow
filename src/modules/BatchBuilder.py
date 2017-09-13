@@ -1,21 +1,20 @@
 import numpy as np
 import sys
 
-def makeBatches(inputArray, size):
+def makeBatches(inputArray, batches):
     """ Makes batches from a given set.
 
     Args:
-        inputArray: An array containing the data to be split into batches.
-        size: Size of the batches that should be made.
+        inputArray: A numpy array containing the data to be split into batches.
+        batches: The number of batches to create.
 
     Returns:
-
+        outputArray: A numpy array containing the data split into batches.
     """
     print(inputArray)
     length = len(inputArray)
-    print(length, size)
-    batches = length // size + 1
-    print(batches)
+    print("Length:", length)
+    print("Batches:", batches)
 
     outputArray = np.asarray(np.array_split(inputArray, batches))
     for i in range(len(outputArray)):

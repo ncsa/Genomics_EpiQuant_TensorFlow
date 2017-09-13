@@ -9,7 +9,7 @@ import modules.BatchBuilder as bb
 import sys
 
 appTime = timer.Timer()
-batch = 100
+batches = 100
 
 # Gets the phenotype names and the regression y values.
 print()
@@ -22,7 +22,7 @@ snpNames = np.transpose(snpNames)
 snpData = np.transpose(snpData)
 print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
-bb.makeBatches(snpData, batch)
+bb.makeBatches(snpData, batches)
 
 inSize = len(snpData[0])
 outSize = len(phenoData[0])
