@@ -16,8 +16,7 @@ def makeBatches(inputArray, size):
     print(length, size)
     batches = length // size + 1
     print(batches)
-    outputArray = np.empty([batches, size, len(inputArray[0])], dtype=object)
-    outputArray = np.array_split(inputArray, batches)
+    outputArray = np.asarray(np.array_split(inputArray, batches))
     print(outputArray)
     print(outputArray.shape)
 
