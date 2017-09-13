@@ -87,7 +87,7 @@ def getData(filePath, getCombinations):
         # Slice off name column and delete name column from data array.    
         nameArray = np.asarray([[x] for x in fullArray[:, 0]])
         # Convert data array to floating point.
-        dataArray = np.delete(fullArray, 0, 1).astype(np.float64)
+        dataArray = np.delete(fullArray, 0, 1).astype(np.float32)
         if not getCombinations:
             return nameArray, dataArray
         else:
