@@ -20,4 +20,8 @@ def makeBatches(inputArray, batches):
         outputArray[i] = np.asarray(outputArray[i])
         for j in range(len(outputArray[i])):
             outputArray[i][j] = np.asarray(outputArray[i][j])
+
+    print(outputArray.shape)
+    print(outputArray[0].shape)
+
     return outputArray
