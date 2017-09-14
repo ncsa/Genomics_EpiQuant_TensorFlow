@@ -19,5 +19,6 @@ def logTraining(pastLoss, currentLoss, alpha, step, appTime):
         "   Step:", "{:8d}".format(step),
         "   Loss:", "{:.2E}".format(currentLoss),
         "   Delta:", "{:.2E}".format(abs(pastLoss-currentLoss)),
-        "   Alpha:", "{:.2E}".format(alpha)
+        "   Alpha:", "{:.2E}".format(alpha),
+        "\n"
     )
