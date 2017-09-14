@@ -32,7 +32,7 @@ snpDataBatches = bb.makeBatches(snpData, outSize)
 snpData = None
 
 # Initialize graph structure.
-layer = net.ConnectedLayer(inSize, outSize)
+layer = net.ConnectedLayer(inSize, 1)
 layer.train()
 layer.shape()
 
