@@ -1,5 +1,6 @@
 import numpy as np
 import sys
+import modules.Progress as prog
 
 def makeBatches(inputArray, batches):
     """ Makes batches from a given set.
@@ -15,6 +16,7 @@ def makeBatches(inputArray, batches):
 
     outputArray = np.asarray(np.array_split(inputArray, batches))
     for i in range(len(outputArray)):
+        prog.progress(i, len(outputArray), "Batches Built")
         outputArray[i] = np.asarray(outputArray[i])
         for j in range(len(outputArray[i])):
             outputArray[i][j] = np.asarray(outputArray[i][j])
