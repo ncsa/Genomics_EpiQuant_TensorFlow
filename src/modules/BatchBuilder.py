@@ -15,6 +15,9 @@ def makeBatches(inputArray, batches):
     length = len(inputArray)
 
     outputArray = np.asarray(np.array_split(inputArray, batches))
+    print(outputArray)
+    sys.exit()
+
     print("Making Batches...")
     for i in range(len(outputArray)):
         prog.progress(i, len(outputArray), "Batches Built")
