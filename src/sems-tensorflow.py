@@ -10,7 +10,7 @@ import modules.Progress as prog
 import sys
 
 appTime = timer.Timer()
-batches = 25
+batches = 4
 
 # Gets the phenotype names and the regression y values.
 print()
