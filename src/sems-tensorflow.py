@@ -10,7 +10,6 @@ import modules.Progress as prog
 import sys
 
 appTime = timer.Timer()
-batches = 4
 
 # Gets the phenotype names and the regression y values.
 print()
@@ -29,7 +28,7 @@ batches = len(phenoData[0])
 outSize = 1
 
 # Make Batches out of snpData and unallocate snpData
-snpDataBatches = bb.makeBatches(snpData, outSize)
+snpDataBatches = bb.makeBatches(snpData, batches)
 snpData = None
 
 # Initialize graph structure.
