@@ -28,7 +28,7 @@ inSize = len(snpData[0])
 outSize = len(phenoData[0])
 
 # Make Batches out of snpData and unallocate snpData
-snpDataBatches = bb.makeBatches(snpData, batches)
+snpDataBatches = bb.makeBatches(snpData, outSize)
 snpData = None
 
 # Initialize graph structure.
@@ -50,7 +50,7 @@ while True:
             [layer.loss, layer.trainStep],
             feed_dict = {
                 layer.x: snpDataBatches[i],
-                layer.y: [phenoData[0]]
+                layer.y: numpy.asarray([phenoData[0][i]]).reshape(1, outSize)
             }
         )
         prog.progress(i, len(snpDataBatches), "Training Completed in Epoch " + str(step))
@@ -67,7 +67,7 @@ while True:
                 layer.w,
                 feed_dict = {
                     layer.x: snpDataBatches[0],
-                    layer.y: [phenoData[0]]
+                    layer.y: numpy.asarray([phenoData[0][0]]).reshape(1, outSize)
                 }
             ),
             delimiter="\t",
@@ -79,7 +79,7 @@ while True:
                 layer.b,
                 feed_dict = {
                     layer.x: snpDataBatches[0],
-                    layer.y: [phenoData[0]]
+                    layer.y: numpy.asarray([phenoData[0][0]]).reshape(1, outSize)
                 }
             ),
             delimiter="\t",
