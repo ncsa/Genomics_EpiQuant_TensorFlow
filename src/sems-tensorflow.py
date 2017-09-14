@@ -5,6 +5,7 @@ import modules.Network as net
 import modules.SessionHandler as sh
 import modules.Timer as timer
 import modules.BatchBuilder as bb
+import modules.Progress as prog
 
 import sys
 
@@ -44,6 +45,7 @@ step = 1
 while True:
     # Train for an epoch
     for i in range(len(snpDataBatches)):
+        prog.progress(i, len(snpDataBatches), "Calculated")
         _ = sess.run(
             layer.trainStep,
             feed_dict = {
@@ -63,7 +65,7 @@ while True:
 
     # sh.printTensors(sess, layer, snpData, phenoData, 0)
 
-    sh.logTraining(pastLoss, currentLoss, alpha, step, appTime)
+    prog.logTraining(pastLoss, currentLoss, alpha, step, appTime)
 
     # Save the weight and bias tensors when the model converges.
     if abs(pastLoss - currentLoss) < (alpha):
