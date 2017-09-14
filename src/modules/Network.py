@@ -36,7 +36,7 @@ class ConnectedLayer:
         self.rmse = tf.sqrt(tf.reduce_sum(tf.pow(self.y - self.z, 2)) / self.outSize)
         self.loss = self.rmse + self.l2
         # self.trainStep = tf.train.GradientDescentOptimizer(0.05).minimize(self.loss)
-        self.trainStep = tf.train.AdamOptimizer.minimize(self.loss)
+        self.trainStep = tf.train.AdamOptimizer().minimize(self.loss)
 
 
     def shape(self):
