@@ -45,7 +45,7 @@ step = 1
 while True:
     # Train for an epoch
     for i in range(len(snpDataBatches)):
-        prog.progress(i, len(snpDataBatches), "Training Complted in Epoch " + str(step))
+        prog.progress(i, len(snpDataBatches), "Training Completed in Epoch " + str(step))
         _ = sess.run(
             layer.trainStep,
             feed_dict = {
