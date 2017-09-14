@@ -96,6 +96,7 @@ while True:
         break
     pastLoss = currentLoss
     step += 1
+    np.random.shuffle(snpDataBatches)
 
 print(appTime.getTime(), "Closing session...\n")
 sess.close()
