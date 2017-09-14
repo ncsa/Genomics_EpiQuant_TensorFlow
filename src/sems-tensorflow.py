@@ -46,7 +46,6 @@ while True:
     # Train for an epoch
     # Get the current loss and train the graph.
     for i in range(len(snpDataBatches)):
-        prog.progress(i, len(snpDataBatches), "Training Completed in Epoch " + str(step))
         currentLoss, _ = sess.run(
             [layer.loss, layer.trainStep],
             feed_dict = {
@@ -54,6 +53,7 @@ while True:
                 layer.y: [phenoData[0]]
             }
         )
+        prog.progress(i, len(snpDataBatches), "Training Completed in Epoch " + str(step))
 
     # sh.printTensors(sess, layer, snpData, phenoData, 0)
 
