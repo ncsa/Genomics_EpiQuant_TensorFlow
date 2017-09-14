@@ -25,14 +25,15 @@ print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
 
 # Get input and output size for tensors.
 inSize = len(snpData[0])
-outSize = len(phenoData[0])
+batches = len(phenoData[0])
+outSize = 1
 
 # Make Batches out of snpData and unallocate snpData
 snpDataBatches = bb.makeBatches(snpData, outSize)
 snpData = None
 
 # Initialize graph structure.
-layer = net.ConnectedLayer(inSize, 1)
+layer = net.ConnectedLayer(inSize, outSize)
 layer.train()
 layer.shape()
 
@@ -50,7 +51,7 @@ while True:
             [layer.loss, layer.trainStep],
             feed_dict = {
                 layer.x: snpDataBatches[i],
-                layer.y: numpy.asarray([phenoData[0][i]]).reshape(1, outSize)
+                layer.y: np.asarray([phenoData[0][i]]).reshape(1, outSize)
             }
         )
         prog.progress(i, len(snpDataBatches), "Training Completed in Epoch " + str(step))
@@ -67,7 +68,7 @@ while True:
                 layer.w,
                 feed_dict = {
                     layer.x: snpDataBatches[0],
-                    layer.y: numpy.asarray([phenoData[0][0]]).reshape(1, outSize)
+                    layer.y: np.asarray([phenoData[0][0]]).reshape(1, outSize)
                 }
             ),
             delimiter="\t",
@@ -79,7 +80,7 @@ while True:
                 layer.b,
                 feed_dict = {
                     layer.x: snpDataBatches[0],
-                    layer.y: numpy.asarray([phenoData[0][0]]).reshape(1, outSize)
+                    layer.y: np.asarray([phenoData[0][0]]).reshape(1, outSize)
                 }
             ),
             delimiter="\t",
@@ -88,7 +89,7 @@ while True:
         break
     pastLoss = currentLoss
     step += 1
-    np.random.shuffle(snpDataBatches)
+    # np.random.shuffle(snpDataBatches)
 
 print(appTime.getTime(), "Closing session...\n")
 sess.close()
