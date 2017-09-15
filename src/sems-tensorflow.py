@@ -90,5 +90,5 @@ while True:
     step += 1
     # np.random.shuffle(snpDataBatches)
 
-print(appTime.getTime(), "Closing session...\n")
+print(" [", appTime.getTime(), "]", "Closing session...\n")
 sess.close()
