@@ -88,7 +88,10 @@ while True:
         break
     pastLoss = currentLoss
     step += 1
-    # np.random.shuffle(snpDataBatches)
+    rngState = numpy.random.get_state()
+    np.random.shuffle(snpDataBatches)
+    numpy.random.set_state(rngState)
+    np.random.shuffle(phenoData[0])
 
 print(" [", appTime.getTime(), "]", "Closing session...\n")
 sess.close()
