@@ -64,7 +64,7 @@ def calculateInteractions(inputArray):
             else:
                 generateData(inputArray[i], inputArray[length - j - 1], iteration, outputArray)
             iteration += 1
-        prog.progress(i, length, "Calculated")
+        prog.progress(i, length, "Interactions Calculated")
 
     return outputArray
 
