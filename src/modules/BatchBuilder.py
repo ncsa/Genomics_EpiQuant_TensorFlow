@@ -4,7 +4,7 @@ Builds batches for training the neural network
 """
 
 import numpy as np
-import modules.Progress as prog
+import Progress as prog
 
 def make_batches(input_array, batches):
     """ Makes batches from a given set.

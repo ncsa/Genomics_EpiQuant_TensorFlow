@@ -5,7 +5,7 @@ Imports the data and calculates pairwise combinations.
 
 import math
 import numpy as np
-import modules.Progress as prog
+import Progress as prog
 
 def generate_names(name_1, name_2, position, output_array):
     """ Generates all possible name combinations.
