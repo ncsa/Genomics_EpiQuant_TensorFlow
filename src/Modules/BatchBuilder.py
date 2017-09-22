@@ -18,14 +18,11 @@ def make_batches(input_array, batches):
     """
 
     output_array = np.asarray(np.array_split(input_array, batches))
-    print("Length: ", len(output_array))
+    
     for i in range(len(output_array)):
         output_array[i] = np.asarray(output_array[i])
         for j in range(len(output_array[i])):
             output_array[i][j] = np.asarray(output_array[i][j])
         prog.progress(i, len(output_array), "Batches Built")
-
-    print(output_array.shape)
-    print(output_array[0].shape)
 
     return output_array
