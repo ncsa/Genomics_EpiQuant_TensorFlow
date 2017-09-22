@@ -20,6 +20,7 @@ def make_batches(input_array, batches):
     output_array = np.asarray(np.array_split(input_array, batches))
 
     for i in range(len(output_array)):
+        print("Length: ", i)
         output_array[i] = np.asarray(output_array[i])
         for j in range(len(output_array[i])):
             output_array[i][j] = np.asarray(output_array[i][j])
