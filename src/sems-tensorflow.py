@@ -29,8 +29,7 @@ def main():
     out_size = 1
 
     # Make Batches out of snp_data and unallocate snp_data
-    snp_data_batches = bb.make_batches(snp_data, batches)
-    snp_data = None
+    snp_data = bb.make_batches(snp_data, batches)
 
     # Initialize graph structure.
     layer = net.ConnectedLayer(in_size, out_size)
@@ -46,15 +45,15 @@ def main():
     while True:
         # Train for an epoch
         # Get the current loss and train the graph.
-        for i in range(len(snp_data_batches)):
+        for i in range(len(snp_data)):
             current_loss, _ = sess.run(
                 [layer.loss, layer.train_step],
                 feed_dict={
-                    layer.x: snp_data_batches[i],
+                    layer.x: snp_data[i],
                     layer.y: np.asarray([pheno_data[0][i]]).reshape(1, out_size)
                 }
             )
-            prog.progress(i, len(snp_data_batches), "Training Completed in Epoch " + str(step))
+            prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
         # sh.print_tensors(sess, layer, snp_data, pheno_data, 0)
 
@@ -67,7 +66,7 @@ def main():
                 sess.run(
                     layer.w,
                     feed_dict={
-                        layer.x: snp_data_batches[0],
+                        layer.x: snp_data[0],
                         layer.y: np.asarray([pheno_data[0][0]]).reshape(1, out_size)
                     }
                 ),
@@ -79,7 +78,7 @@ def main():
                 sess.run(
                     layer.b,
                     feed_dict={
-                        layer.x: snp_data_batches[0],
+                        layer.x: snp_data[0],
                         layer.y: np.asarray([pheno_data[0][0]]).reshape(1, out_size)
                     }
                 ),
@@ -91,7 +90,7 @@ def main():
         step += 1
 
         rng_state = np.random.get_state()
-        np.random.shuffle(snp_data_batches)
+        np.random.shuffle(snp_data)
         np.random.set_state(rng_state)
         np.random.shuffle(pheno_data[0])
 
