@@ -37,9 +37,9 @@ def main():
     layer = net.ConnectedLayer(len(snp_data[0]), OUT_SIZE)
     layer.shape()
 
+    print(len(snp_data[0]))
     print(snp_data)
     print(pheno_data)
-    print(len(snp_data[0]))
     sys.exit()
 
     # Start TensorFlow session.
