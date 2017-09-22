@@ -51,14 +51,12 @@ def main():
 
     past_loss = 0
     step = 1
-    pool = mp.Pool(processes=2)
+    pool = mp.Pool()
     while True:
         rng_state = np.random.get_state()
         snp_data_result = pool.apply_async(shuffle_in_unison, args=(snp_data, rng_state), kwds={})
         pheno_data_result = pool.apply_async(shuffle_in_unison, args=(pheno_data, rng_state), kwds={})
-        print(snp_data_result.get())
-        print(pheno_data_result.get())
-        sys.exit()
+
         # rng_state = np.random.get_state()
         # np.random.shuffle(snp_data)
         # np.random.set_state(rng_state)
@@ -109,6 +107,10 @@ def main():
             break
         past_loss = current_loss
         step += 1
+
+        print(snp_data_result.get())
+        print(pheno_data_result.get())
+        sys.exit()
 
     print(" [", app_time.get_time(), "]", "Closing session...\n")
     sess.close()
