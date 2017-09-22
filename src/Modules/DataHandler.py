@@ -96,5 +96,4 @@ def get_data(file_path, get_combinations):
         data_array = np.delete(full_array, 0, 1).astype(np.float32)
         if not get_combinations:
             return name_array, data_array
-        else:
-            return calculate_interactions(name_array), calculate_interactions(data_array)
+        return calculate_interactions(name_array), calculate_interactions(data_array)
