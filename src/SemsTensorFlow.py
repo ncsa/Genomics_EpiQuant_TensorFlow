@@ -40,7 +40,6 @@ def main():
     print(snp_data)
     print(pheno_data)
     print(len(snp_data[0]))
-    print(len(pheno_data[0]))
     sys.exit()
 
     # Start TensorFlow session.
