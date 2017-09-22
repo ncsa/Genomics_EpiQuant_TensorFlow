@@ -1,5 +1,11 @@
-""" Builds, trains and runs a neural network. """
+""" SemsTensorFlow.py
 
+Builds, trains and runs a neural network.
+"""
+
+import sys
+import copy
+import multiprocessing as mp
 import numpy as np
 import Modules.DataHandler as dh
 import Modules.Network as net
@@ -7,6 +13,16 @@ import Modules.SessionHandler as sh
 import Modules.Timer as timer
 import Modules.BatchBuilder as bb
 import Modules.Progress as prog
+
+OUT_SIZE = 1
+ALPHA = 0.05
+
+def shuffle_in_unison(input_data, rng_state):
+    """ Shuffles a list in unison with others. """
+    data_copy = copy.deepcopy(input_data)
+    np.random.set_state(rng_state)
+    np.random.shuffle(data_copy)
+    return data_copy
 
 def main():
     """ Builds, trains, and runs the neural network. """
@@ -23,51 +39,56 @@ def main():
     snp_data = np.transpose(snp_data)
     print("SNPs:", snp_data.shape, "\n\n", snp_names, "\n\n", snp_data, "\n")
 
-    # Get input and output size for tensors.
-    in_size = len(snp_data[0])
-    batches = len(pheno_data[0])
-    out_size = 1
-
     # Make Batches out of snp_data and unallocate snp_data
-    snp_data = bb.make_batches(snp_data, batches)
+    snp_data = bb.make_batches(snp_data, len(pheno_data[0]))
 
     # Initialize graph structure.
-    layer = net.ConnectedLayer(in_size, out_size)
-    layer.train()
+    layer = net.ConnectedLayer(len(snp_data[0]), OUT_SIZE)
     layer.shape()
 
     # Start TensorFlow session.
     sess = sh.start_session()
 
-    alpha = 0.05
     past_loss = 0
     step = 1
+    pool = mp.Pool(processes=2)
     while True:
+        rng_state = np.random.get_state()
+        snp_data_result = pool.apply_async(shuffle_in_unison, args=(snp_data, rng_state), kwds={})
+        pheno_data_result = pool.apply_async(shuffle_in_unison, args=(pheno_data, rng_state), kwds={})
+        print(snp_data_result.get())
+        print(pheno_data_result.get())
+        sys.exit()
+        # rng_state = np.random.get_state()
+        # np.random.shuffle(snp_data)
+        # np.random.set_state(rng_state)
+        # np.random.shuffle(pheno_data[0])
+
         # Train for an epoch
         # Get the current loss and train the graph.
         for i in range(len(snp_data)):
             current_loss, _ = sess.run(
                 [layer.loss, layer.train_step],
                 feed_dict={
-                    layer.x: snp_data[i],
-                    layer.y: np.asarray([pheno_data[0][i]]).reshape(1, out_size)
+                    layer.input: snp_data[i],
+                    layer.observed: np.asarray([pheno_data[0][i]]).reshape(1, OUT_SIZE)
                 }
             )
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
         # sh.print_tensors(sess, layer, snp_data, pheno_data, 0)
 
-        prog.log_training(past_loss, current_loss, alpha, step, app_time)
+        prog.log_training(past_loss, current_loss, ALPHA, step, app_time)
 
         # Save the weight and bias tensors when the model converges.
-        if abs(past_loss - current_loss) < (alpha):
+        if abs(past_loss - current_loss) < (ALPHA):
             np.savetxt(
                 "w.out",
                 sess.run(
-                    layer.w,
+                    layer.weight,
                     feed_dict={
-                        layer.x: snp_data[0],
-                        layer.y: np.asarray([pheno_data[0][0]]).reshape(1, out_size)
+                        layer.input: snp_data[0],
+                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
                     }
                 ),
                 delimiter="\t",
@@ -76,10 +97,10 @@ def main():
             np.savetxt(
                 "b.out",
                 sess.run(
-                    layer.b,
+                    layer.bias,
                     feed_dict={
-                        layer.x: snp_data[0],
-                        layer.y: np.asarray([pheno_data[0][0]]).reshape(1, out_size)
+                        layer.input: snp_data[0],
+                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
                     }
                 ),
                 delimiter="\t",
@@ -88,11 +109,6 @@ def main():
             break
         past_loss = current_loss
         step += 1
-
-        rng_state = np.random.get_state()
-        np.random.shuffle(snp_data)
-        np.random.set_state(rng_state)
-        np.random.shuffle(pheno_data[0])
 
     print(" [", app_time.get_time(), "]", "Closing session...\n")
     sess.close()
