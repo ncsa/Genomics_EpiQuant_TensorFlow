@@ -30,12 +30,18 @@ def main():
     snp_data = np.transpose(snp_data)
     print("SNPs:", snp_data.shape, "\n\n", snp_names, "\n\n", snp_data, "\n")
 
-    # Make Batches out of snp_data and unallocate snp_data
+    # Make batches out of snp_data and unallocate snp_data
     snp_data = bb.make_batches(snp_data, len(pheno_data[0]))
 
     # Initialize graph structure.
     layer = net.ConnectedLayer(len(snp_data[0]), OUT_SIZE)
     layer.shape()
+
+    print(snp_data)
+    print(pheno_data)
+    print(len(snp_data[0]))
+    print(len(pheno_data[0]))
+    sys.exit()
 
     # Start TensorFlow session.
     sess = sh.start_session()
@@ -44,9 +50,6 @@ def main():
     step = 1
 
     while True:
-        print(len(snp_data))
-        print(len(pheno_data[0]))
-        sys.exit()
         # rng_state = np.random.get_state()
         # np.random.shuffle(snp_data)
         # np.random.set_state(rng_state)
