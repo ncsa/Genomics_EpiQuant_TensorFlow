@@ -3,10 +3,6 @@
 Builds, trains and runs a neural network.
 """
 
-import sys
-import copy
-import asyncio
-import multiprocessing as mp
 import numpy as np
 import Modules.DataHandler as dh
 import Modules.Network as net
@@ -17,14 +13,6 @@ import Modules.Progress as prog
 
 OUT_SIZE = 1
 ALPHA = 0.05
-
-@asyncio.coroutine
-def shuffle_in_unison(input_data, rng_state):
-    """ Shuffles a list in unison with others. """
-    data_copy = copy.deepcopy(input_data)
-    np.random.set_state(rng_state)
-    np.random.shuffle(data_copy)
-    return data_copy
 
 def main():
     """ Builds, trains, and runs the neural network. """
@@ -53,27 +41,12 @@ def main():
 
     past_loss = 0
     step = 1
-    mp.set_start_method('spawn')
-    loop = asyncio.get_event_loop()
 
     while True:
         rng_state = np.random.get_state()
-        tasks = loop.create_task(shuffle_in_unison(snp_data, rng_state)), loop.create_task(shuffle_in_unison(pheno_data[0], rng_state))
-
-        print('Before Run')
-        snp_data_result, pheno_data_result = loop.run_until_complete(asyncio.gather(*tasks))
-        print('After Run')
-
-        print(snp_data)
-        print(pheno_data)
-        print(snp_data_result)
-        print(pheno_data_result)
-        sys.exit()
-
-        # rng_state = np.random.get_state()
-        # np.random.shuffle(snp_data)
-        # np.random.set_state(rng_state)
-        # np.random.shuffle(pheno_data[0])
+        np.random.shuffle(snp_data)
+        np.random.set_state(rng_state)
+        np.random.shuffle(pheno_data[0])
 
         # Train for an epoch
         # Get the current loss and train the graph.
@@ -120,7 +93,6 @@ def main():
         step += 1
 
     print(" [", app_time.get_time(), "]", "Closing session...\n")
-    loop.close()
     sess.close()
 
 if __name__ == "__main__":
