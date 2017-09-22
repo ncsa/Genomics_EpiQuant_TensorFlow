@@ -3,6 +3,7 @@
 Builds, trains and runs a neural network.
 """
 
+import sys
 import numpy as np
 import Modules.DataHandler as dh
 import Modules.Network as net
@@ -43,10 +44,13 @@ def main():
     step = 1
 
     while True:
-        rng_state = np.random.get_state()
-        np.random.shuffle(snp_data)
-        np.random.set_state(rng_state)
-        np.random.shuffle(pheno_data[0])
+        print(len(snp_data))
+        print(len(pheno_data[0]))
+        sys.exit()
+        # rng_state = np.random.get_state()
+        # np.random.shuffle(snp_data)
+        # np.random.set_state(rng_state)
+        # np.random.shuffle(pheno_data[0])
 
         # Train for an epoch
         # Get the current loss and train the graph.
