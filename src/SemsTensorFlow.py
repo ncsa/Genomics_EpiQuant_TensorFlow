@@ -5,6 +5,7 @@ Builds, trains and runs a neural network.
 
 import sys
 import copy
+import asyncio
 import multiprocessing as mp
 import numpy as np
 import Modules.DataHandler as dh
@@ -52,16 +53,20 @@ def main():
     past_loss = 0
     step = 1
     mp.set_start_method('spawn')
-    pool = mp.Pool(processes=2)
+    loop = asyncio.get_event_loop()
+
     while True:
         rng_state = np.random.get_state()
-        snp_data_result = pool.apply_async(shuffle_in_unison, args=(snp_data, rng_state), kwds={})
-        pheno_data_result = pool.apply_async(shuffle_in_unison, args=(pheno_data, rng_state), kwds={})
+        tasks = loop.create_task(shuffle_in_unison(snp_data, rng_state)), loop.create_task(shuffle_in_unison(pheno_data[0], rng_state))
+
+        print('Before Run')
+        snp_data_result, pheno_data_result = loop.run_until_complete(asyncio.gather(*tasks))
+        print('After Run')
 
         print(snp_data)
         print(pheno_data)
-        print(snp_data_result.get())
-        print(pheno_data_result.get())
+        print(snp_data_result)
+        print(pheno_data_result)
         sys.exit()
 
         # rng_state = np.random.get_state()
@@ -114,8 +119,6 @@ def main():
         step += 1
 
     print(" [", app_time.get_time(), "]", "Closing session...\n")
-    pool.close()
-    pool.join()
     sess.close()
 
 if __name__ == "__main__":
