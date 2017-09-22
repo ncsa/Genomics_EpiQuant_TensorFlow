@@ -34,14 +34,8 @@ def main():
     snp_data = bb.make_batches(snp_data, len(pheno_data[0]))
 
     # Initialize graph structure.
-    layer = net.ConnectedLayer(len(snp_data[0]), OUT_SIZE)
+    layer = net.ConnectedLayer(len(snp_data[0][0]), OUT_SIZE)
     layer.shape()
-
-    print(snp_data.shape)
-    print(pheno_data.shape)
-    print(snp_data)
-    print(pheno_data)
-    sys.exit()
 
     # Start TensorFlow session.
     sess = sh.start_session()
@@ -50,10 +44,10 @@ def main():
     step = 1
 
     while True:
-        # rng_state = np.random.get_state()
-        # np.random.shuffle(snp_data)
-        # np.random.set_state(rng_state)
-        # np.random.shuffle(pheno_data[0])
+        rng_state = np.random.get_state()
+        np.random.shuffle(snp_data)
+        np.random.set_state(rng_state)
+        np.random.shuffle(pheno_data[0])
 
         # Train for an epoch
         # Get the current loss and train the graph.
