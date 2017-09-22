@@ -51,6 +51,7 @@ def main():
 
     past_loss = 0
     step = 1
+    mp.set_start_method('spawn')
     pool = mp.Pool(processes=2)
     while True:
         rng_state = np.random.get_state()
