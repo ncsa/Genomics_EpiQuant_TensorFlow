@@ -18,12 +18,13 @@ import Modules.Progress as prog
 OUT_SIZE = 1
 ALPHA = 0.05
 
-async def shuffle_in_unison(input_data, rng_state):
+@asyncio.coroutine
+def shuffle_in_unison(input_data, rng_state):
     """ Shuffles a list in unison with others. """
     data_copy = copy.deepcopy(input_data)
     np.random.set_state(rng_state)
     np.random.shuffle(data_copy)
-    return await data_copy
+    return data_copy
 
 def main():
     """ Builds, trains, and runs the neural network. """
