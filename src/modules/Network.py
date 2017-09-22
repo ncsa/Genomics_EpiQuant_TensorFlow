@@ -18,11 +18,7 @@ class ConnectedLayer:
         """
         self.in_size = in_size
         self.out_size = out_size
-        self.w = tf.clip_by_value(tf.Variable(tf.ones([self.in_size,
-                                                       self.out_size]),
-                                              dtype=tf.float32),
-                                  0,
-                                  float("inf"))
+        self.w = tf.Variable(tf.ones([self.in_size, self.out_size]), dtype=tf.float32)
         self.b = tf.Variable(tf.zeros(self.out_size), dtype=tf.float32)
 
         self.x = tf.placeholder(tf.float32, [None, self.in_size])
