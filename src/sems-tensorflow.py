@@ -1,12 +1,12 @@
 """ Builds, trains and runs a neural network. """
 
 import numpy as np
-import modules.DataHandler as dh
-import modules.Network as net
-import modules.SessionHandler as sh
-import modules.Timer as timer
-import modules.BatchBuilder as bb
-import modules.Progress as prog
+import Modules.DataHandler as dh
+import Modules.Network as net
+import Modules.SessionHandler as sh
+import Modules.Timer as timer
+import Modules.BatchBuilder as bb
+import Modules.Progress as prog
 
 def main():
     """ Builds, trains, and runs the neural network. """
