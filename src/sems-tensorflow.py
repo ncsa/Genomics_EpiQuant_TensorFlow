@@ -1,4 +1,5 @@
-import tensorflow as tf
+""" Builds, trains and runs a neural network. """
+
 import numpy as np
 import modules.DataHandler as dh
 import modules.Network as net
@@ -7,92 +8,95 @@ import modules.Timer as timer
 import modules.BatchBuilder as bb
 import modules.Progress as prog
 
-import sys
+def main():
+    """ Builds, trains, and runs the neural network. """
+    app_time = timer.Timer()
 
-appTime = timer.Timer()
+    # Gets the phenotype names and the regression y values.
+    print()
+    pheno_names, pheno_data = dh.get_data("./data/8.pheno.2.txt", False)
+    print("Phenotypes:", pheno_data.shape, "\n\n", pheno_names, "\n\n", pheno_data, "\n")
 
-# Gets the phenotype names and the regression y values.
-print()
-phenoNames, phenoData = dh.getData("./data/8.pheno.2.txt", False)
-print("Phenotypes:", phenoData.shape, "\n\n", phenoNames, "\n\n", phenoData, "\n")
+    # Gets the snp names and the regressors.
+    snp_names, snp_data = dh.get_data("./data/8.snps.txt", True)
+    snp_names = np.transpose(snp_names)
+    snp_data = np.transpose(snp_data)
+    print("SNPs:", snp_data.shape, "\n\n", snp_names, "\n\n", snp_data, "\n")
 
-# Gets the snp names and the regressors.
-snpNames, snpData = dh.getData("./data/8.snps.txt", True)
-snpNames = np.transpose(snpNames)
-snpData = np.transpose(snpData)
-print("SNPs:", snpData.shape, "\n\n", snpNames, "\n\n", snpData, "\n")
+    # Get input and output size for tensors.
+    in_size = len(snp_data[0])
+    batches = len(pheno_data[0])
+    out_size = 1
 
-# Get input and output size for tensors.
-inSize = len(snpData[0])
-batches = len(phenoData[0])
-outSize = 1
+    # Make Batches out of snp_data and unallocate snp_data
+    snp_data_batches = bb.make_batches(snp_data, batches)
+    snp_data = None
 
-# Make Batches out of snpData and unallocate snpData
-snpDataBatches = bb.makeBatches(snpData, batches)
-snpData = None
+    # Initialize graph structure.
+    layer = net.ConnectedLayer(in_size, out_size)
+    layer.train()
+    layer.shape()
 
-# Initialize graph structure.
-layer = net.ConnectedLayer(inSize, outSize)
-layer.train()
-layer.shape()
+    # Start TensorFlow session.
+    sess = sh.start_session()
 
-# Start TensorFlow session.
-sess = sh.startSession()
-
-alpha = 0.05
-pastLoss = 0
-step = 1
-while True:
-    # Train for an epoch
-    # Get the current loss and train the graph.
-    for i in range(len(snpDataBatches)):
-        currentLoss, _ = sess.run(
-            [layer.loss, layer.trainStep],
-            feed_dict = {
-                layer.x: snpDataBatches[i],
-                layer.y: np.asarray([phenoData[0][i]]).reshape(1, outSize)
-            }
-        )
-        prog.progress(i, len(snpDataBatches), "Training Completed in Epoch " + str(step))
-
-    # sh.printTensors(sess, layer, snpData, phenoData, 0)
-
-    prog.logTraining(pastLoss, currentLoss, alpha, step, appTime)
-
-    # Save the weight and bias tensors when the model converges.
-    if abs(pastLoss - currentLoss) < (alpha):
-        np.savetxt(
-            "w.out",
-            sess.run(
-                layer.w,
-                feed_dict = {
-                    layer.x: snpDataBatches[0],
-                    layer.y: np.asarray([phenoData[0][0]]).reshape(1, outSize)
+    alpha = 0.05
+    past_loss = 0
+    step = 1
+    while True:
+        # Train for an epoch
+        # Get the current loss and train the graph.
+        for i in range(len(snp_data_batches)):
+            current_loss, _ = sess.run(
+                [layer.loss, layer.train_step],
+                feed_dict={
+                    layer.x: snp_data_batches[i],
+                    layer.y: np.asarray([pheno_data[0][i]]).reshape(1, out_size)
                 }
-            ),
-            delimiter="\t",
-            fmt="%1.2e"
-        )
-        np.savetxt(
-            "b.out",
-            sess.run(
-                layer.b,
-                feed_dict = {
-                    layer.x: snpDataBatches[0],
-                    layer.y: np.asarray([phenoData[0][0]]).reshape(1, outSize)
-                }
-            ),
-            delimiter="\t",
-            fmt="%1.2e"
-        )
-        break
-    pastLoss = currentLoss
-    step += 1
+            )
+            prog.progress(i, len(snp_data_batches), "Training Completed in Epoch " + str(step))
 
-    rngState = np.random.get_state()
-    np.random.shuffle(snpDataBatches)
-    np.random.set_state(rngState)
-    np.random.shuffle(phenoData[0])
+        # sh.print_tensors(sess, layer, snp_data, pheno_data, 0)
 
-print(" [", appTime.getTime(), "]", "Closing session...\n")
-sess.close()
+        prog.log_training(past_loss, current_loss, alpha, step, app_time)
+
+        # Save the weight and bias tensors when the model converges.
+        if abs(past_loss - current_loss) < (alpha):
+            np.savetxt(
+                "w.out",
+                sess.run(
+                    layer.w,
+                    feed_dict={
+                        layer.x: snp_data_batches[0],
+                        layer.y: np.asarray([pheno_data[0][0]]).reshape(1, out_size)
+                    }
+                ),
+                delimiter="\t",
+                fmt="%1.2e"
+            )
+            np.savetxt(
+                "b.out",
+                sess.run(
+                    layer.b,
+                    feed_dict={
+                        layer.x: snp_data_batches[0],
+                        layer.y: np.asarray([pheno_data[0][0]]).reshape(1, out_size)
+                    }
+                ),
+                delimiter="\t",
+                fmt="%1.2e"
+            )
+            break
+        past_loss = current_loss
+        step += 1
+
+        rng_state = np.random.get_state()
+        np.random.shuffle(snp_data_batches)
+        np.random.set_state(rng_state)
+        np.random.shuffle(pheno_data[0])
+
+    print(" [", app_time.get_time(), "]", "Closing session...\n")
+    sess.close()
+
+if __name__ == "__main__":
+    main()

@@ -1,28 +1,31 @@
+""" Batch Builder
+
+Builds batches for training the neural network
+"""
+
 import numpy as np
-import sys
 import modules.Progress as prog
 
-def makeBatches(inputArray, batches):
+def make_batches(input_array, batches):
     """ Makes batches from a given set.
 
     Args:
-        inputArray: A numpy array containing the data to be split into batches.
+        input_array: A numpy array containing the data to be split into batches.
         batches: The number of batches to create.
 
     Returns:
-        outputArray: A numpy array containing the data split into batches.
+        output_array: A numpy array containing the data split into batches.
     """
-    length = len(inputArray)
 
-    outputArray = np.asarray(np.array_split(inputArray, batches))
-    
-    for i in range(len(outputArray)):
-        outputArray[i] = np.asarray(outputArray[i])
-        for j in range(len(outputArray[i])):
-            outputArray[i][j] = np.asarray(outputArray[i][j])
-        prog.progress(i, len(outputArray), "Batches Built")
+    output_array = np.asarray(np.array_split(input_array, batches))
 
-    # print(outputArray.shape)
-    # print(outputArray[0].shape)
+    for i in range(len(output_array)):
+        output_array[i] = np.asarray(output_array[i])
+        for j in range(len(output_array[i])):
+            output_array[i][j] = np.asarray(output_array[i][j])
+        prog.progress(i, len(output_array), "Batches Built")
 
-    return outputArray
+    # print(output_array.shape)
+    # print(output_array[0].shape)
+
+    return output_array

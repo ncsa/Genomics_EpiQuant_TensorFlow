@@ -16,12 +16,12 @@ def progress(i, length, message):
     if i + 1 == length:
         print("\n")
 
-def logTraining(pastLoss, currentLoss, alpha, step, appTime):
+def log_training(past_loss, current_loss, alpha, step, app_time):
     print(
-        " [", appTime.getTime(), "]",
+        " [", app_time.get_time(), "]",
         "   Step:", "{:8d}".format(step),
-        "   Loss:", "{:.2E}".format(currentLoss),
-        "   Delta:", "{:.2E}".format(abs(pastLoss-currentLoss)),
+        "   Loss:", "{:.2E}".format(current_loss),
+        "   Delta:", "{:.2E}".format(abs(past_loss-current_loss)),
         "   Alpha:", "{:.2E}".format(alpha),
         "\n"
     )
