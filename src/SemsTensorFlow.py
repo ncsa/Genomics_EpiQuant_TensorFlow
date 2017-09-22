@@ -37,7 +37,8 @@ def main():
     layer = net.ConnectedLayer(len(snp_data[0]), OUT_SIZE)
     layer.shape()
 
-    print(len(snp_data[0]))
+    print(snp_data.shape)
+    print(pheno_data.shape)
     print(snp_data)
     print(pheno_data)
     sys.exit()
