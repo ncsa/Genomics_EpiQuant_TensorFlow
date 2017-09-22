@@ -120,6 +120,7 @@ def main():
         step += 1
 
     print(" [", app_time.get_time(), "]", "Closing session...\n")
+    loop.close()
     sess.close()
 
 if __name__ == "__main__":
