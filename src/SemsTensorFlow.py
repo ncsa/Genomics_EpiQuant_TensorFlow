@@ -57,6 +57,12 @@ def main():
         snp_data_result = pool.apply_async(shuffle_in_unison, args=(snp_data, rng_state), kwds={})
         pheno_data_result = pool.apply_async(shuffle_in_unison, args=(pheno_data, rng_state), kwds={})
 
+        print(snp_data)
+        print(pheno_data)
+        print(snp_data_result.get())
+        print(pheno_data_result.get())
+        sys.exit()
+
         # rng_state = np.random.get_state()
         # np.random.shuffle(snp_data)
         # np.random.set_state(rng_state)
@@ -73,8 +79,6 @@ def main():
                 }
             )
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
-
-        # sh.print_tensors(sess, layer, snp_data, pheno_data, 0)
 
         prog.log_training(past_loss, current_loss, ALPHA, step, app_time)
 
@@ -108,11 +112,9 @@ def main():
         past_loss = current_loss
         step += 1
 
-        print(snp_data_result.get())
-        print(pheno_data_result.get())
-        sys.exit()
-
     print(" [", app_time.get_time(), "]", "Closing session...\n")
+    pool.close()
+    pool.join()
     sess.close()
 
 if __name__ == "__main__":
