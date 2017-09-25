@@ -42,21 +42,26 @@ def main():
 
     past_loss = 0
     step = 1
+    index_array = np.arange(len(snp_data))
 
     while True:
-        rng_state = np.random.get_state()
-        np.random.shuffle(snp_data)
-        np.random.set_state(rng_state)
-        np.random.shuffle(pheno_data[0])
+        # rng_state = np.random.get_state()
+        # np.random.shuffle(snp_data)
+        # np.random.set_state(rng_state)
+        # np.random.shuffle(pheno_data[0])
 
         # Train for an epoch
         # Get the current loss and train the graph.
         for i in range(len(snp_data)):
+            index = np.random.choice(index_array, 1, replace=False)
+            snp_sample = [snp_data[index]]
+            pheno_sample = [pheno_data[0][index]]
+
             current_loss, _ = sess.run(
                 [layer.loss, layer.train_step],
                 feed_dict={
-                    layer.input: snp_data[i],
-                    layer.observed: np.asarray([pheno_data[0][i]]).reshape(1, OUT_SIZE)
+                    layer.input: snp_sample,
+                    layer.observed: pheno_sample
                 }
             )
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
