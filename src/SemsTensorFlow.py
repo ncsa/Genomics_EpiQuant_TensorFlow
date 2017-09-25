@@ -55,7 +55,7 @@ def main():
         for i in range(len(snp_data)):
             index = np.random.choice(index_array, 1, replace=False)
             snp_sample = np.squeeze(snp_data[index], axis=0)
-            pheno_sample = [[pheno_data[0][index]]]
+            pheno_sample = [pheno_data[0][index]]
 
             current_loss, _ = sess.run(
                 [layer.loss, layer.train_step],
