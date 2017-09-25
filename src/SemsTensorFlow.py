@@ -74,8 +74,7 @@ def main():
                         layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
                     }
                 ),
-                delimiter="\t",
-                fmt="%1.2e"
+                delimiter="\t"
             )
             np.savetxt(
                 "b.out",
@@ -86,8 +85,7 @@ def main():
                         layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
                     }
                 ),
-                delimiter="\t",
-                fmt="%1.2e"
+                delimiter="\t"
             )
             break
         past_loss = current_loss
