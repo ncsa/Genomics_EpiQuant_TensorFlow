@@ -42,7 +42,7 @@ def main():
 
     past_loss = 0
     step = 1
-    index_array = np.arange(len(snp_data))
+    index = np.arange(len(snp_data))
 
     while True:
         # rng_state = np.random.get_state()
@@ -52,10 +52,10 @@ def main():
 
         # Train for an epoch
         # Get the current loss and train the graph.
+        np.random.shuffle(index);
         for i in range(len(snp_data)):
-            index = np.random.choice(index_array, 1, replace=False)
-            snp_sample = np.squeeze(snp_data[index], axis=0)
-            pheno_sample = [pheno_data[0][index]]
+            snp_sample = np.squeeze(snp_data[index[i]], axis=0)
+            pheno_sample = [pheno_data[0][index[i]]]
 
             current_loss, _ = sess.run(
                 [layer.loss, layer.train_step],
