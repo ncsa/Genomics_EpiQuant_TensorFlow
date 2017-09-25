@@ -55,7 +55,7 @@ def main():
         np.random.shuffle(index);
         for i in range(len(snp_data)):
             snp_sample = snp_data[index[i]]
-            pheno_sample = [pheno_data[0][index[i]]]
+            pheno_sample = [[pheno_data[0][index[i]]]]
 
             current_loss, _ = sess.run(
                 [layer.loss, layer.train_step],
