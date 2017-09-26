@@ -29,7 +29,7 @@ class ConnectedLayer:
 
         self.loss = tf.sqrt(tf.reduce_sum(tf.pow(self.observed - self.predicted, 2)) / out_size)\
                     + tf.nn.l2_loss(self.weight)
-        self.train_step = tf.train.GradientDescentOptimizer(0.001).minimize(self.loss)
+        self.train_step = tf.train.GradientDescentOptimizer(0.0001).minimize(self.loss)
 
     def shape(self):
         """ Prints the graph's tensor dimensions. """
