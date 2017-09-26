@@ -13,7 +13,7 @@ import Modules.BatchBuilder as bb
 import Modules.Progress as prog
 
 OUT_SIZE = 1
-ALPHA = 0.05
+ALPHA = 10
 
 def main():
     """ Builds, trains, and runs the neural network. """
@@ -52,7 +52,7 @@ def main():
 
         # Train for an epoch
         # Get the current loss and train the graph.
-        np.random.shuffle(index);
+        np.random.shuffle(index)
         for i in range(len(snp_data)):
             snp_sample = snp_data[index[i]]
             pheno_sample = [[pheno_data[0][index[i]]]]
