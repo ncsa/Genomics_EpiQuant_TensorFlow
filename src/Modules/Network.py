@@ -19,7 +19,8 @@ class ConnectedLayer:
         Returns:
             None
         """
-        self.weight = tf.Variable(tf.ones([in_size, out_size]), dtype=tf.float32)
+        self.weight = tf.get_variable('weight', shape=[in_size, out_size],
+                                      initializer=tf.contrib.layers.xavier_initializer())
         self.bias = tf.Variable(tf.zeros(out_size), dtype=tf.float32)
 
         self.input = tf.placeholder(tf.float32, [None, in_size])
