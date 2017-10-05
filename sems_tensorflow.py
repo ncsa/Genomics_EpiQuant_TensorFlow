@@ -4,6 +4,7 @@ Main driver script for stepwise epistatic model selection.
 """
 
 import os
+import tensorflow as tf
 
 PBS_JOBID = os.environ['PBS_JOBID']
 PBS_HOSTNAMES = '/var/spool/torque/aux/' + PBS_JOBID
@@ -14,6 +15,12 @@ def main():
         workers = [(x.strip() + ':2222') for x in host_file.readlines()]
     master = [workers.pop()]
     print(master, workers)
+
+    print({
+        'master': master,
+        'workers': workers
+    })
+    # tf.train.ClusterSpec()
 
 if __name__ == "__main__":
     main()
