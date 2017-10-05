@@ -8,6 +8,7 @@ import os
 PBS_JOBID = os.environ['PBS_JOBID']
 
 def main():
+    """ Main of sems_tensorflow """
     print(PBS_JOBID)
     print('/var/spool/torque/aux/' + PBS_JOBID)
 
