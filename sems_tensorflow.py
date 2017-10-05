@@ -12,7 +12,7 @@ def main():
     """ Main of sems_tensorflow """
     with open(PBS_HOSTNAMES) as host_file:
         host_names = [(x.strip() + ':2222') for x in host_file.readlines()]
-    # print(host_names)
+    print(host_names)
 
 if __name__ == "__main__":
     main()
