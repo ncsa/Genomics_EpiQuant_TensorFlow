@@ -11,7 +11,7 @@ PBS_HOSTNAMES = '/var/spool/torque/aux/' + PBS_JOBID
 def main():
     """ Main of sems_tensorflow """
     with open(PBS_HOSTNAMES) as host_file:
-        host_names = [(x + ':2222') for x in host_file.readlines()]
+        host_names = [(x + ':2222') for x in host_file.readlines().strip()]
     print(host_names)
 
 if __name__ == "__main__":
