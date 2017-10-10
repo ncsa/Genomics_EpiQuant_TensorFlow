@@ -7,7 +7,7 @@ import tensorflow as tf
 
 class ConnectedLayer:
     """ A self connected layer performing multiple linear regression. """
-    def __init__(self, in_size, out_size, num_batches, beta):
+    def __init__(self, in_size, out_size, num_batches, beta, train_rate):
         """ Initializes the tensors and sets up the graph structure.
         Performs l2 regularization, calculates root mean squared error,
         and minimizes loss using an Adam Optimizer.
@@ -33,7 +33,7 @@ class ConnectedLayer:
                     + tf.nn.l2_loss(self.weight) * beta
 
         # Accumulate all gradients from each batch then apply them all at once.
-        opt = tf.train.GradientDescentOptimizer(0.001)
+        opt = tf.train.GradientDescentOptimizer(train_rate)
         # Get all trainable variables and create zeros of their counterparts
         t_vars = tf.trainable_variables()
         accum_tvars = [tf.Variable(tf.zeros_like(t_var.initialized_value()), trainable=False) for t_var in t_vars]
