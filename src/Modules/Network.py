@@ -37,7 +37,7 @@ class ConnectedLayer:
         self.zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_tvars]
         batch_grads_vars = opt.compute_gradients(self.loss, t_vars)
         self.accum_ops = [accum_tvars[i].assign_add(batch_grad_var[0]) for i, batch_grad_var in enumerate(batch_grads_vars)]
-        self.train_step = opt.apply_gradients([(accum_tvars[i], batch_grad_var[1]) for i, batch_grad_var in enumerate(batch_grads_vars)] / num_batches)
+        self.train_step = opt.apply_gradients([(accum_tvars[i] / num_batches, batch_grad_var[1]) for i, batch_grad_var in enumerate(batch_grads_vars)])
 
     def shape(self):
         """ Prints the graph's tensor dimensions. """
