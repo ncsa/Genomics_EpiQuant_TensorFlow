@@ -60,16 +60,8 @@ def main():
             # Accumulate gradients
             snp_sample = snp_data[index[i]]
             pheno_sample = [[pheno_data[0][index[i]]]]
-            sess.run(
-                layer.accum_ops,
-                feed_dict={
-                    layer.input: snp_sample,
-                    layer.observed: pheno_sample
-                }
-            )
-            # Accumulate loss
-            current_loss += sess.run(
-                layer.loss,
+            current_loss, _ += sess.run(
+                [layer.loss, layer.accum_ops],
                 feed_dict={
                     layer.input: snp_sample,
                     layer.observed: pheno_sample
