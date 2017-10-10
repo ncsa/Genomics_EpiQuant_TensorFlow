@@ -15,7 +15,7 @@ import Modules.Progress as prog
 OUT_SIZE = 1
 ALPHA = 1
 BETA = 0.001
-TRAIN_RATE = 0.001
+TRAIN_RATE = 0.0001
 
 def main():
     """ Builds, trains, and runs the neural network. """
