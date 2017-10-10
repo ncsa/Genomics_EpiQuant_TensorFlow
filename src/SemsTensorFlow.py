@@ -13,9 +13,9 @@ import Modules.BatchBuilder as bb
 import Modules.Progress as prog
 
 OUT_SIZE = 1
-ALPHA = 1
-BETA = 0.001
-TRAIN_RATE = 0.00001
+ALPHA = 0.05
+BETA = 0.01
+TRAIN_RATE = 0.0001
 
 def main():
     """ Builds, trains, and runs the neural network. """
