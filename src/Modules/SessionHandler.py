@@ -17,12 +17,12 @@ def start_session():
 
 def print_tensors(sess, layer, snp_data, pheno_data, i):
     """ Prints intermediate tensors. """
-    w, b = sess.run(
-        [layer.w, layer.b],
+    weight, bias = sess.run(
+        [layer.weight, layer.bias],
         feed_dict={
             layer.x: snp_data,
             layer.y: [pheno_data[i]]
         }
     )
-    print(w)
-    print(b)
+    print(weight)
+    print(bias)

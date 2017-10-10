@@ -27,7 +27,7 @@ class ConnectedLayer:
         self.input = tf.placeholder(tf.float32, [None, in_size])
         self.observed = tf.placeholder(tf.float32, [None, out_size])
 
-        # Calculate predicted values and loss using RMSE
+        # Calculate predicted values and loss using MSE
         predicted = tf.matmul(self.input, self.weight) + self.bias
         self.loss = tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size\
                     + tf.nn.l2_loss(self.weight) * beta
@@ -41,7 +41,7 @@ class ConnectedLayer:
         # Compute gradients for each loss and apply their contribution to the accumulator
         batch_grads_vars = opt.compute_gradients(self.loss, t_vars)
         self.accum_ops = [accum_tvars[i].assign_add(batch_grad_var[0]) for i, batch_grad_var in enumerate(batch_grads_vars)]
-        # Apply the averaged gradients to update free ]=]\variables.
+        # Apply the averaged gradients to update free variables.
         self.train_step = opt.apply_gradients([(accum_tvars[i] / num_batches, batch_grad_var[1]) for i, batch_grad_var in enumerate(batch_grads_vars)])
 
     def shape(self):
