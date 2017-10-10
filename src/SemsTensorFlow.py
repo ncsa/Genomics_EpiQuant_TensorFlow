@@ -15,7 +15,7 @@ import Modules.Progress as prog
 OUT_SIZE = 1
 ALPHA = 0.05
 BETA = 0.01
-TRAIN_RATE = 0.0001
+TRAIN_RATE = 0.00001
 
 def main():
     """ Builds, trains, and runs the neural network. """
@@ -54,9 +54,10 @@ def main():
         np.random.shuffle(index)
         snp_sample = None
         pheno_sample = None
+        current_loss = 0
 
-        # Accumulate gradients
         for i in range(len(snp_data)):
+            # Accumulate gradients
             snp_sample = snp_data[index[i]]
             pheno_sample = [[pheno_data[0][index[i]]]]
             sess.run(
@@ -66,11 +67,19 @@ def main():
                     layer.observed: pheno_sample
                 }
             )
+            # Accumulate loss
+            current_loss += sess.run(
+                layer.loss,
+                feed_dict={
+                    layer.input: snp_sample,
+                    layer.observed: pheno_sample
+                }
+            )
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
-        # Apply averaged gradient and calculate current loss
-        current_loss, _ = sess.run(
-            [layer.loss, layer.train_step],
+        # Apply averaged gradient
+        sess.run(
+            layer.train_step,
             feed_dict={
                 layer.input: snp_sample,
                 layer.observed: pheno_sample
