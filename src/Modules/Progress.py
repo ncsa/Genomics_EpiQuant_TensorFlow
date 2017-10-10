@@ -36,9 +36,9 @@ def log_training(past_loss, current_loss, alpha, step, app_time):
      """
     print(
         " [", app_time.get_time(), "]",
-        "   Step:", "{:8d}".format(step),
-        "   Loss:", "{:.2E}".format(current_loss),
-        "   Delta:", "{:.2E}".format(abs(past_loss-current_loss)),
-        "   Alpha:", "{:.2E}".format(alpha),
+        " Step:", "{:6d}".format(step),
+        " Loss:", "{:.2E}".format(current_loss),
+        " Delta:", "{:.2E}".format(abs(past_loss-current_loss)),
+        " Alpha:", "{:.2E}".format(alpha),
         "\n"
     )
