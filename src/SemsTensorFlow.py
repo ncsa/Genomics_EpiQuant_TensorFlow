@@ -13,7 +13,7 @@ import Modules.BatchBuilder as bb
 import Modules.Progress as prog
 
 OUT_SIZE = 1
-ALPHA = 0.05
+ALPHA = 1
 
 def main():
     """ Builds, trains, and runs the neural network. """
@@ -45,7 +45,7 @@ def main():
     index = np.arange(len(snp_data))
 
     while True:
-        # Zero accumulators
+        # Zero gradient accumulators
         sess.run(layer.zero_ops)
 
         # Generate randomized index
@@ -53,7 +53,7 @@ def main():
         snp_sample = None
         pheno_sample = None
 
-        # Accumulate values
+        # Accumulate gradients
         for i in range(len(snp_data)):
             snp_sample = snp_data[index[i]]
             pheno_sample = [[pheno_data[0][index[i]]]]
@@ -66,7 +66,7 @@ def main():
             )
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
-        # Apply training and calculate current loss
+        # Apply averaged gradient and calculate current loss
         current_loss, _ = sess.run(
             [layer.loss, layer.train_step],
             feed_dict={
