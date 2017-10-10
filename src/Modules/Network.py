@@ -7,7 +7,7 @@ import tensorflow as tf
 
 class ConnectedLayer:
     """ A self connected layer performing multiple linear regression. """
-    def __init__(self, in_size, out_size):
+    def __init__(self, in_size, out_size, num_batches):
         """ Initializes the tensors and sets up the graph structure.
         Performs l2 regularization, calculates root mean squared error,
         and minimizes loss using an Adam Optimizer.
@@ -26,11 +26,18 @@ class ConnectedLayer:
         self.input = tf.placeholder(tf.float32, [None, in_size])
         self.observed = tf.placeholder(tf.float32, [None, out_size])
 
-        self.predicted = tf.matmul(self.input, self.weight) + self.bias
+        predicted = tf.matmul(self.input, self.weight) + self.bias
 
-        self.loss = tf.sqrt(tf.reduce_sum(tf.pow(self.observed - self.predicted, 2)) / out_size)\
+        self.loss = tf.sqrt(tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size)\
                     + tf.nn.l2_loss(self.weight) * 100
-        self.train_step = tf.train.GradientDescentOptimizer(0.000001).minimize(self.loss)
+
+        opt = tf.train.GradientDescentOptimizer(0.001)
+        t_vars = tf.trainable_variables()
+        accum_tvars = [tf.Variable(tf.zeros_like(t_var.initialized_value()), trainable=False) for t_var in t_vars]
+        self.zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_tvars]
+        batch_grads_vars = opt.compute_gradients(self.loss, t_vars)
+        self.accum_ops = [accum_tvars[i].assign_add(batch_grad_var[0]) for i, batch_grad_var in enumerate(batch_grads_vars)]
+        self.train_step = opt.apply_gradients([(accum_tvars[i], batch_grad_var[1]) for i, batch_grad_var in enumerate(batch_grads_vars)] / num_batches)
 
     def shape(self):
         """ Prints the graph's tensor dimensions. """

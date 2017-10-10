@@ -34,7 +34,7 @@ def main():
     snp_data = bb.make_batches(snp_data, len(pheno_data[0]))
 
     # Initialize graph structure.
-    layer = net.ConnectedLayer(len(snp_data[0][0]), OUT_SIZE)
+    layer = net.ConnectedLayer(len(snp_data[0][0]), OUT_SIZE, len(snp_data))
     layer.shape()
 
     # Start TensorFlow session.
@@ -45,26 +45,35 @@ def main():
     index = np.arange(len(snp_data))
 
     while True:
-        # rng_state = np.random.get_state()
-        # np.random.shuffle(snp_data)
-        # np.random.set_state(rng_state)
-        # np.random.shuffle(pheno_data[0])
+        # Zero accumulators
+        sess.run(layer.zero_ops)
 
-        # Train for an epoch
-        # Get the current loss and train the graph.
+        # Generate randomized index
         np.random.shuffle(index)
+        snp_sample = None
+        pheno_sample = None
+
+        # Accumulate values
         for i in range(len(snp_data)):
             snp_sample = snp_data[index[i]]
             pheno_sample = [[pheno_data[0][index[i]]]]
-
-            current_loss, _ = sess.run(
-                [layer.loss, layer.train_step],
+            sess.run(
+                layer.accum_ops,
                 feed_dict={
                     layer.input: snp_sample,
                     layer.observed: pheno_sample
                 }
             )
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
+
+        # Apply training and calculate current loss
+        current_loss, _ = sess.run(
+            [layer.loss, layer.train_step],
+            feed_dict={
+                layer.input: snp_sample,
+                layer.observed: pheno_sample
+            }
+        )
 
         prog.log_training(past_loss, current_loss, ALPHA, step, app_time)
 
