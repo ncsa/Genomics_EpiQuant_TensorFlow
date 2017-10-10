@@ -54,14 +54,13 @@ def main():
         np.random.shuffle(index)
         snp_sample = None
         pheno_sample = None
-        current_loss = 0
 
+        # Accumulate gradients
         for i in range(len(snp_data)):
-            # Accumulate gradients
             snp_sample = snp_data[index[i]]
             pheno_sample = [[pheno_data[0][index[i]]]]
-            current_loss += sess.run(
-                [layer.loss, layer.accum_ops],
+            sess.run(
+                layer.accum_ops,
                 feed_dict={
                     layer.input: snp_sample,
                     layer.observed: pheno_sample
@@ -69,9 +68,9 @@ def main():
             )
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
-        # Apply averaged gradient
-        sess.run(
-            layer.train_step,
+        # Apply averaged gradient and calculate current loss
+        current_loss, _ = sess.run(
+            [layer.loss, layer.train_step],
             feed_dict={
                 layer.input: snp_sample,
                 layer.observed: pheno_sample
