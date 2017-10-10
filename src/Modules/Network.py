@@ -30,7 +30,7 @@ class ConnectedLayer:
         # Calculate predicted values and loss using RMSE
         predicted = tf.matmul(self.input, self.weight) + self.bias
         self.loss = tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size\
-                    + tf.nn.l2_loss(self.weight) * beta + tf.nn.l2_loss(self.bias) * beta
+                    + tf.nn.l2_loss(self.weight) * beta
 
         # Accumulate all gradients from each batch then apply them all at once.
         opt = tf.train.GradientDescentOptimizer(0.001)
