@@ -7,7 +7,7 @@ import tensorflow as tf
 
 class ConnectedLayer:
     """ A self connected layer performing multiple linear regression. """
-    def __init__(self, in_size, out_size, num_batches):
+    def __init__(self, in_size, out_size, num_batches, beta):
         """ Initializes the tensors and sets up the graph structure.
         Performs l2 regularization, calculates root mean squared error,
         and minimizes loss using an Adam Optimizer.
@@ -29,8 +29,8 @@ class ConnectedLayer:
 
         # Calculate predicted values and loss using RMSE
         predicted = tf.matmul(self.input, self.weight) + self.bias
-        self.loss = tf.sqrt(tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size)\
-                    + tf.nn.l2_loss(self.weight) * 100
+        self.loss = tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size\
+                    + tf.nn.l2_loss(self.weight) * beta + tf.nn.l2_loss(self.bias) * beta
 
         # Accumulate all gradients from each batch then apply them all at once.
         opt = tf.train.GradientDescentOptimizer(0.001)

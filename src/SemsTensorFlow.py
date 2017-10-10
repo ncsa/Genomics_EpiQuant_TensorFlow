@@ -14,6 +14,7 @@ import Modules.Progress as prog
 
 OUT_SIZE = 1
 ALPHA = 1
+BETA = 0.001
 
 def main():
     """ Builds, trains, and runs the neural network. """
@@ -34,7 +35,7 @@ def main():
     snp_data = bb.make_batches(snp_data, len(pheno_data[0]))
 
     # Initialize graph structure.
-    layer = net.ConnectedLayer(len(snp_data[0][0]), OUT_SIZE, len(snp_data))
+    layer = net.ConnectedLayer(len(snp_data[0][0]), OUT_SIZE, len(snp_data), BETA)
     layer.shape()
 
     # Start TensorFlow session.
