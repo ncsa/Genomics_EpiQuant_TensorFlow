@@ -29,7 +29,7 @@ class ConnectedLayer:
         self.predicted = tf.matmul(self.input, self.weight) + self.bias
 
         self.loss = tf.sqrt(tf.reduce_sum(tf.pow(self.observed - self.predicted, 2)) / out_size)\
-                    + tf.nn.l2_loss(self.weight)
+                    + tf.nn.l2_loss(self.weight) * 100
         self.train_step = tf.train.GradientDescentOptimizer(0.000001).minimize(self.loss)
 
     def shape(self):
