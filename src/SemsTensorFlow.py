@@ -14,7 +14,7 @@ import Modules.Progress as prog
 
 OUT_SIZE = 1
 ALPHA = 0.5
-BETA = 0.001
+BETA = 0.01
 TRAIN_RATE = 0.00001
 
 def main():

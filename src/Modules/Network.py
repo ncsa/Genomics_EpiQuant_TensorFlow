@@ -20,8 +20,11 @@ class ConnectedLayer:
             None
         """
         # Initialize weight, bias, input, and observed
+        regularizer = tf.contrib.layers.l2_regularizer(scale=0.1)
         self.weight = tf.get_variable('weight', shape=[in_size, out_size],
-                                      initializer=tf.contrib.layers.xavier_initializer())
+                                      initializer=tf.contrib.layers.xavier_initializer(),
+                                      regularizer=regularizer)
+
         self.bias = tf.Variable(tf.zeros(out_size), dtype=tf.float32)
 
         self.input = tf.placeholder(tf.float32, [None, in_size])
@@ -29,8 +32,10 @@ class ConnectedLayer:
 
         # Calculate predicted values and loss using MSE
         predicted = tf.matmul(self.input, self.weight) + self.bias
+        reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
+
         self.loss = tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size\
-                    + tf.nn.l2_loss(self.weight) * beta
+                    + reg_losses * beta
 
         # Accumulate all gradients from each batch then apply them all at once.
         opt = tf.train.GradientDescentOptimizer(train_rate)
