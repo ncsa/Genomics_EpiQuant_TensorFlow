@@ -39,7 +39,7 @@ def log_training(accuracy, past_accuracy, alpha, step, app_time):
         " Step:", "{:6d}".format(step),
         " Past:", "{:.2E}".format(past_accuracy),
         " Current:", "{:.2E}".format(accuracy),
-        " Delta:", "{:.2E}".format(abs(past_accuracy - accuracy))
+        " Delta:", "{:.2E}".format(abs(past_accuracy - accuracy)),
         " Alpha:", "{:.2E}".format(alpha),
         "\n"
     )
