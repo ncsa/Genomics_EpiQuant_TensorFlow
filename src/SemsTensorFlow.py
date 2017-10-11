@@ -70,7 +70,7 @@ def main():
 
             if current_loss < ALPHA:
                 count += 1
-            
+
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
         # Apply averaged gradient and calculate current loss
@@ -86,7 +86,7 @@ def main():
         prog.log_training(accuracy, past_accuracy, ALPHA, step, app_time)
 
         # Save the weight and bias tensors when the model converges.
-        if past_accuracy == accuracy:
+        if abs(past_accuracy - current_loss) < 0.0005:
             np.savetxt(
                 "w.out",
                 sess.run(
