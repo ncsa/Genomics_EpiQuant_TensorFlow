@@ -20,7 +20,7 @@ class ConnectedLayer:
             None
         """
         # Initialize weight, bias, input, and observed
-        regularizer = tf.contrib.layers.l2_regularizer(scale=0.1)
+        regularizer = tf.contrib.layers.l2_regularizer(scale=beta)
         self.weight = tf.get_variable('weight', shape=[in_size, out_size],
                                       initializer=tf.contrib.layers.xavier_initializer(),
                                       regularizer=regularizer)
