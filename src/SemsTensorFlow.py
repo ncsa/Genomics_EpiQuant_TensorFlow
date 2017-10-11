@@ -13,7 +13,7 @@ import Modules.BatchBuilder as bb
 import Modules.Progress as prog
 
 OUT_SIZE = 1
-ALPHA = 0.05
+ALPHA = 0.5
 BETA = 0.01
 TRAIN_RATE = 0.0000001
 
@@ -54,33 +54,39 @@ def main():
         np.random.shuffle(index)
         snp_sample = None
         pheno_sample = None
+        count = 0
 
         # Accumulate gradients
         for i in range(len(snp_data)):
             snp_sample = snp_data[index[i]]
             pheno_sample = [[pheno_data[0][index[i]]]]
-            sess.run(
-                layer.accum_ops,
+            current_loss, _ = sess.run(
+                [layer.loss, layer.accum_ops],
                 feed_dict={
                     layer.input: snp_sample,
                     layer.observed: pheno_sample
                 }
             )
+
+            if abs(past_loss - current_loss) < ALPHA:
+                count += 1
+            
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
         # Apply averaged gradient and calculate current loss
-        current_loss, _ = sess.run(
-            [layer.loss, layer.train_step],
+        sess.run(
+            layer.train_step,
             feed_dict={
                 layer.input: snp_sample,
                 layer.observed: pheno_sample
             }
         )
 
-        prog.log_training(past_loss, current_loss, ALPHA, step, app_time)
+        accuracy = count / len(snp_data)
+        prog.log_training(accuracy, current_loss, ALPHA, step, app_time)
 
         # Save the weight and bias tensors when the model converges.
-        if abs(past_loss - current_loss) < (ALPHA):
+        if accuracy >= 0.95:
             np.savetxt(
                 "w.out",
                 sess.run(
