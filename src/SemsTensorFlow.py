@@ -68,7 +68,7 @@ def main():
                 }
             )
 
-            if abs(past_loss - current_loss) < ALPHA:
+            if current_loss < ALPHA:
                 count += 1
             
             prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
