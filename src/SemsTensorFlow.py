@@ -65,7 +65,7 @@ def main():
                 feed_dict={
                     layer.input: snp_sample,
                     layer.observed: pheno_sample,
-                    layer.keep_prob: 0.1
+                    layer.keep_prob: [[0.1]]
                 }
             )
 
@@ -80,7 +80,7 @@ def main():
             feed_dict={
                 layer.input: snp_sample,
                 layer.observed: pheno_sample,
-                layer.keep_prob: 0.1
+                layer.keep_prob: [[0.1]]
             }
         )
 
@@ -96,7 +96,7 @@ def main():
                     feed_dict={
                         layer.input: snp_data[0],
                         layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE),
-                        layer.keep_prob: 1
+                        layer.keep_prob: [[1]]
                     }
                 ),
                 delimiter="\t"
@@ -108,7 +108,7 @@ def main():
                     feed_dict={
                         layer.input: snp_data[0],
                         layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE),
-                        layer.keep_prob: 1
+                        layer.keep_prob: [[1]]
                     }
                 ),
                 delimiter="\t"
