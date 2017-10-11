@@ -42,7 +42,7 @@ def main():
     # Start TensorFlow session.
     sess = sh.start_session()
 
-    past_loss = 0
+    past_accuracy = 0
     step = 1
     index = np.arange(len(snp_data))
 
@@ -83,10 +83,10 @@ def main():
         )
 
         accuracy = count / len(snp_data)
-        prog.log_training(accuracy, current_loss, ALPHA, step, app_time)
+        prog.log_training(accuracy, past_accuracy, ALPHA, step, app_time)
 
         # Save the weight and bias tensors when the model converges.
-        if accuracy >= 0.95:
+        if past_accuracy == accuracy:
             np.savetxt(
                 "w.out",
                 sess.run(
@@ -110,7 +110,7 @@ def main():
                 delimiter="\t"
             )
             break
-        past_loss = current_loss
+        past_accuracy = accuracy
         step += 1
 
     print(" [", app_time.get_time(), "]", "Closing session...\n")

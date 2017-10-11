@@ -21,12 +21,12 @@ def progress(i, length, message):
     if i + 1 == length:
         print("\n")
 
-def log_training(accuracy, current_loss, alpha, step, app_time):
+def log_training(accuracy, past_accuracy, alpha, step, app_time):
     """ Logs neural network training.
 
     Args:
         accuracy: Current model accuracy.
-        current_loss: The loss of the current training step.
+        past_accuracy: Past model accuracy.
         alpha: The loss difference to exit the training loop.
         step: The current training step number.
         app_time: Tracks the current running time of the application.
@@ -37,8 +37,9 @@ def log_training(accuracy, current_loss, alpha, step, app_time):
     print(
         " [", app_time.get_time(), "]",
         " Step:", "{:6d}".format(step),
-        " Loss:", "{:.2E}".format(current_loss),
-        " Accuracy:", "{:.2E}".format(accuracy),
+        " Past:", "{:.2E}".format(past_accuracy),
+        " Current:", "{:.2E}".format(accuracy),
+        " Delta:", "{:.2E}".format(abs(past_accuracy - accuracy))
         " Alpha:", "{:.2E}".format(alpha),
         "\n"
     )
