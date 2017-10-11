@@ -64,7 +64,8 @@ def main():
                 [layer.loss, layer.accum_ops],
                 feed_dict={
                     layer.input: snp_sample,
-                    layer.observed: pheno_sample
+                    layer.observed: pheno_sample,
+                    layer.keep_prob: 0.1
                 }
             )
 
@@ -78,7 +79,8 @@ def main():
             layer.train_step,
             feed_dict={
                 layer.input: snp_sample,
-                layer.observed: pheno_sample
+                layer.observed: pheno_sample,
+                layer.keep_prob: 0.1
             }
         )
 
@@ -93,7 +95,8 @@ def main():
                     layer.weight,
                     feed_dict={
                         layer.input: snp_data[0],
-                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
+                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE),
+                        layer.keep_prob: 1
                     }
                 ),
                 delimiter="\t"
@@ -104,7 +107,8 @@ def main():
                     layer.bias,
                     feed_dict={
                         layer.input: snp_data[0],
-                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
+                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE),
+                        layer.keep_prob: 1
                     }
                 ),
                 delimiter="\t"

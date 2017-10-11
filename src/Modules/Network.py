@@ -29,13 +29,14 @@ class ConnectedLayer:
 
         self.input = tf.placeholder(tf.float32, [None, in_size])
         self.observed = tf.placeholder(tf.float32, [None, out_size])
+        self.keep_prob = tf.placeholder(tf.float32, [None, out_size])
 
-        # Calculate predicted values and loss using MSE
+        # calculated predicted matrix and add dropout
         predicted = tf.matmul(self.input, self.weight) + self.bias
         reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
-
-        self.loss = tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size\
-                    + sum(reg_losses)
+        drop_out = tf.nn.dropout(predicted, tf.reduce_sum(self.keep_prob))
+        self.loss = tf.reduce_sum(tf.pow(self.observed - drop_out, 2)) / out_size\
+                    + tf.reduce_sum(reg_losses)
 
         # Accumulate all gradients from each batch then apply them all at once.
         opt = tf.train.GradientDescentOptimizer(train_rate)
