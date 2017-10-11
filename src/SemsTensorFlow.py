@@ -16,6 +16,7 @@ OUT_SIZE = 1
 ALPHA = 0.5
 BETA = 0.01
 TRAIN_RATE = 0.00001
+KEEP_PROB = 0.1
 
 def main():
     """ Builds, trains, and runs the neural network. """
@@ -43,6 +44,7 @@ def main():
     sess = sh.start_session()
 
     past_accuracy = 0
+    past_loss = 0
     step = 1
     index = np.arange(len(snp_data))
 
@@ -65,27 +67,27 @@ def main():
                 feed_dict={
                     layer.input: snp_sample,
                     layer.observed: pheno_sample,
-                    layer.keep_prob: [[0.1]]
+                    layer.keep_prob: [[KEEP_PROB]]
                 }
             )
 
             if current_loss < ALPHA:
                 count += 1
 
-            prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
+            # prog.progress(i, len(snp_data), "Training Completed in Epoch " + str(step))
 
         # Apply averaged gradient and calculate current loss
-        sess.run(
-            layer.train_step,
+        current_loss, _ = sess.run(
+            [layer.loss, layer.train_step],
             feed_dict={
                 layer.input: snp_sample,
                 layer.observed: pheno_sample,
-                layer.keep_prob: [[0.1]]
+                layer.keep_prob: [[KEEP_PROB]]
             }
         )
 
         accuracy = count / len(snp_data)
-        prog.log_training(accuracy, past_accuracy, ALPHA, step, app_time)
+        prog.log_training(accuracy, past_accuracy, current_loss, past_loss, ALPHA, step, app_time)
 
         # Save the weight and bias tensors when the model converges.
         if abs(past_accuracy - accuracy) < 0.0005:
@@ -115,6 +117,7 @@ def main():
             )
             break
         past_accuracy = accuracy
+        past_loss = current_loss
         step += 1
 
     print(" [", app_time.get_time(), "]", "Closing session...\n")

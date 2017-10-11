@@ -31,24 +31,28 @@ class ConnectedLayer:
         self.observed = tf.placeholder(tf.float32, [None, out_size])
         self.keep_prob = tf.placeholder(tf.float32, [None, out_size])
 
-        # calculated predicted matrix and add dropout
+        # Calculate predicted results and added value dropout
+        # Calculate loss with l2 regularizaiton of weights
         predicted = tf.matmul(self.input, self.weight) + self.bias
         reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
         drop_out = tf.nn.dropout(predicted, tf.reduce_sum(self.keep_prob))
         self.loss = tf.reduce_sum(tf.pow(self.observed - drop_out, 2)) / out_size\
                     + tf.reduce_sum(reg_losses)
 
-        # Accumulate all gradients from each batch then apply them all at once.
+        # Accumulate all gradients from each batch then apply them all at once
         opt = tf.train.GradientDescentOptimizer(train_rate)
         # Get all trainable variables and create zeros of their counterparts
         t_vars = tf.trainable_variables()
-        accum_tvars = [tf.Variable(tf.zeros_like(t_var.initialized_value()), trainable=False) for t_var in t_vars]
+        accum_tvars = [tf.Variable(tf.zeros_like(t_var.initialized_value()), trainable=False)
+                       for t_var in t_vars]
         self.zero_ops = [tv.assign(tf.zeros_like(tv)) for tv in accum_tvars]
         # Compute gradients for each loss and apply their contribution to the accumulator
         batch_grads_vars = opt.compute_gradients(self.loss, t_vars)
-        self.accum_ops = [accum_tvars[i].assign_add(batch_grad_var[0]) for i, batch_grad_var in enumerate(batch_grads_vars)]
-        # Apply the averaged gradients to update free variables.
-        self.train_step = opt.apply_gradients([(accum_tvars[i] / num_batches, batch_grad_var[1]) for i, batch_grad_var in enumerate(batch_grads_vars)])
+        self.accum_ops = [accum_tvars[i].assign_add(batch_grad_var[0])
+                          for i, batch_grad_var in enumerate(batch_grads_vars)]
+        # Apply the averaged gradients to update free variables
+        self.train_step = opt.apply_gradients([(accum_tvars[i] / num_batches, batch_grad_var[1])
+                                               for i, batch_grad_var in enumerate(batch_grads_vars)])
 
     def shape(self):
         """ Prints the graph's tensor dimensions. """
