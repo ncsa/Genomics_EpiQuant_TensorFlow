@@ -35,7 +35,7 @@ class ConnectedLayer:
         reg_losses = tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES)
 
         self.loss = tf.reduce_sum(tf.pow(self.observed - predicted, 2)) / out_size\
-                    + reg_losses * beta
+                    + sum(reg_losses)
 
         # Accumulate all gradients from each batch then apply them all at once.
         opt = tf.train.GradientDescentOptimizer(train_rate)
