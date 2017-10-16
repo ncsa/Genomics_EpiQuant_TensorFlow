@@ -21,11 +21,11 @@ def main():
 
     # Gets the phenotype names and the regression y values.
     print()
-    pheno_names, pheno_data = dh.get_data("./data/8.pheno.2.txt", False)
+    pheno_names, pheno_data = dh.get_data(sys.argv[2], False)
     print("Phenotypes:", pheno_data.shape, "\n\n", pheno_names, "\n\n", pheno_data, "\n")
 
     # Gets the snp names and the regressors.
-    snp_names, snp_data = dh.get_data("./data/8.snps.txt", True)
+    snp_names, snp_data = dh.get_data(sys.argv[1], True)
     snp_names = np.transpose(snp_names)
     snp_data = np.transpose(snp_data)
     print("SNPs:", snp_data.shape, "\n\n", snp_names, "\n\n", snp_data, "\n")
