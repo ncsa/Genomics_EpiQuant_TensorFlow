@@ -16,10 +16,10 @@ def progress(i, length, message):
     Returns:
         None
     """
-    print(" [", "{:6.2f}".format((i + 1) / length * 100) + "%", "]", message, end='\r')
-    sys.stdout.flush()
-    if i + 1 == length:
-        print("\n")
+    # print(" [", "{:6.2f}".format((i + 1) / length * 100) + "%", "]", message, end='\r')
+    # sys.stdout.flush()
+    # if i + 1 == length:
+    #     print("\n")
 
 def log_training(past_loss, current_loss, alpha, step, app_time):
     """ Logs neural network training.
