@@ -70,28 +70,28 @@ def main():
 
         # Save the weight and bias tensors when the model converges.
         if abs(past_loss - current_loss) < (ALPHA):
-            np.savetxt(
-                "w.out",
-                sess.run(
-                    layer.weight,
-                    feed_dict={
-                        layer.input: snp_data[0],
-                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
-                    }
-                ),
-                delimiter="\t"
-            )
-            np.savetxt(
-                "b.out",
-                sess.run(
-                    layer.bias,
-                    feed_dict={
-                        layer.input: snp_data[0],
-                        layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
-                    }
-                ),
-                delimiter="\t"
-            )
+            # np.savetxt(
+            #     "w.out",
+            #     sess.run(
+            #         layer.weight,
+            #         feed_dict={
+            #             layer.input: snp_data[0],
+            #             layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
+            #         }
+            #     ),
+            #     delimiter="\t"
+            # )
+            # np.savetxt(
+            #     "b.out",
+            #     sess.run(
+            #         layer.bias,
+            #         feed_dict={
+            #             layer.input: snp_data[0],
+            #             layer.observed: np.asarray([pheno_data[0][0]]).reshape(1, OUT_SIZE)
+            #         }
+            #     ),
+            #     delimiter="\t"
+            # )
             break
         past_loss = current_loss
         step += 1
